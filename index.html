@@ -187,6 +187,10 @@
       <div class="flex items-center space-x-2">
         <span class="text-xl font-bold font-outfit tracking-tight">ArtZoom<span class="text-brand-celadon">.</span></span>
         <span class="text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-mono bg-stone-100 dark:bg-stone-900 px-2 py-0.5 rounded">Campaign</span>
+        <button id="toggle-notes-view-btn" class="text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-2 sm:ml-3 cursor-pointer">
+          <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+          <span id="notes-btn-text">Read Notes</span>
+        </button>
       </div>
       
       <!-- Quick Info / Status Bar (Desktop) -->
@@ -217,7 +221,7 @@
     </header>
 
     <!-- Main Grid: Top Map / Bottom List on mobile, Left Map / Right List on Desktop -->
-    <div class="flex-1 grid grid-cols-1 sm:grid-cols-12 main-grid overflow-hidden">
+    <div id="main-app-layout" class="flex-1 grid grid-cols-1 sm:grid-cols-12 main-grid overflow-hidden">
       
       <!-- Map Section (sm:col-span-5 or 6) -->
       <div class="relative sm:col-span-5 md:col-span-6 border-r border-stone-200 dark:border-stone-800 h-full w-full">
@@ -476,6 +480,190 @@
       </div>
 
     </div>
+
+    <!-- Full-page distraction-free Route Notes -->
+    <div id="full-notes-layout" class="hidden flex-1 overflow-y-auto bg-brand-white dark:bg-brand-black px-6 py-8 md:px-12 md:py-10 w-full select-text">
+      <div class="max-w-3xl mx-auto space-y-8 pb-16">
+        
+        <!-- Header -->
+        <div class="border-b border-stone-200 dark:border-stone-800 pb-6">
+          <h1 class="text-3xl font-bold font-outfit tracking-tight text-brand-black dark:text-brand-white sm:text-4xl">Guerrilla Marketing Blueprint</h1>
+          <p class="text-sm sm:text-base text-stone-500 dark:text-stone-400 mt-2 font-medium font-outfit">
+            Transit-Optimized, Rapid-Succession Route for 20 Poster Deployments
+          </p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="text-xs font-semibold px-2.5 py-1 bg-brand-celadon/10 text-brand-celadon dark:text-brand-celadonLight rounded-full">Total: 3h 14m</span>
+            <span class="text-xs font-semibold px-2.5 py-1 bg-brand-indigo/10 text-[#4f82d1] rounded-full">20 Locations</span>
+            <span class="text-xs font-semibold px-2.5 py-1 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 rounded-full">Starts/Ends: 11 Waterhouse St</span>
+          </div>
+        </div>
+
+        <!-- Instructions content -->
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed text-stone-700 dark:text-stone-300">
+          
+          <!-- SOMERVILLE LAUNCH -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
+              <span class="text-brand-celadon font-mono">Phase 1:</span>
+              <span>Somerville Launch</span>
+            </h2>
+            <div class="space-y-3 pl-1">
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 1: Teele Square Border</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 3-minute walk from 11 Waterhouse St</p>
+                <p class="mt-1"><strong>Placement:</strong> Traffic light post at the Broadway and Curtis Street intersection.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 2: Davis Square</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 10-minute walk down Holland Street</p>
+                <p class="mt-1"><strong>Placement:</strong> The large metal utility control box directly outside the main Davis T Station entrance. Catches commuters heading underground.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- HARVARD & ALLSTON PIPELINE -->
+          <div class="space-y-4 pt-4">
+            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
+              <span class="text-brand-celadon font-mono">Phase 2:</span>
+              <span>Harvard & Allston Pipeline</span>
+            </h2>
+            <div class="space-y-3 pl-1">
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 3: Harvard Art Museum</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 15 minutes via Red Line (Davis to Harvard) + 5-minute walk to Quincy St</p>
+                <p class="mt-1"><strong>Placement:</strong> The crosswalk button pole directly across from the museum entrance. Targets the art-enthusiast demographic.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 4: Eliot Street Bus Stop (Harvard Sq)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk back across Harvard Yard</p>
+                <p class="mt-1"><strong>Placement:</strong> On the exterior metal frame of the bus shelter. High dwell time for people waiting for the bus.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 5: Union Square (Allston)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12 minutes via the 66 Bus from Harvard Square to Union Sq/Brighton Ave stop</p>
+                <p class="mt-1"><strong>Placement:</strong> Light pole near the main Cambridge Street and Brighton Ave convergence, right where pedestrians wait to cross.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 6: Harvard Ave B-Line Platform</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk down Harvard Ave</p>
+                <p class="mt-1"><strong>Placement:</strong> The traffic light post directly on the concrete pedestrian street island. Visible to commuters waiting for the B-Line train.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FENWAY ART CLUSTER -->
+          <div class="space-y-4 pt-4">
+            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
+              <span class="text-brand-celadon font-mono">Phase 3:</span>
+              <span>Fenway Art Cluster</span>
+            </h2>
+            <div class="space-y-3 pl-1">
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 7: Kenmore T Stop</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 10 minutes via Green Line B-Branch (Harvard Ave to Kenmore)</p>
+                <p class="mt-1"><strong>Placement:</strong> A utility box right outside the main bus loop/subway entrance.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 8: Isabella Stewart Gardner Museum</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12-minute walk down Brookline Ave and Evans Way</p>
+                <p class="mt-1"><strong>Placement:</strong> Street sign pole on the sidewalk perimeter facing Evans Way park, capturing the museum queue crowd.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 9: MassArt</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 3-minute walk over to Huntington Ave</p>
+                <p class="mt-1"><strong>Placement:</strong> The crosswalk pole directly in front of the main MassArt campus building. Targets design and art students.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 10: Museum of Fine Arts (MFA)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 4-minute walk down Huntington Ave</p>
+                <p class="mt-1"><strong>Placement:</strong> Light post immediately adjacent to the MFA Green Line E-Branch stop.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK BAY & DOWNTOWN -->
+          <div class="space-y-4 pt-4">
+            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
+              <span class="text-brand-celadon font-mono">Phase 4:</span>
+              <span>Back Bay & Downtown</span>
+            </h2>
+            <div class="space-y-3 pl-1">
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 11: Boston Public Library (Copley)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8 minutes via Green Line E-Branch (MFA to Copley)</p>
+                <p class="mt-1"><strong>Placement:</strong> Heavy traffic control box at the busy corner of Boylston Street and Dartmouth Street.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 12: Boston Common (Arlington Side)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk down Boylston Street</p>
+                <p class="mt-1"><strong>Placement:</strong> A perimeter utility pole right at the corner of the park, directly across from the Arlington T exit.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 13: Boston Common (Park Street Side)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk across Tremont Street side of the Common</p>
+                <p class="mt-1"><strong>Placement:</strong> The metal traffic control box situated right next to the historic Park Street T station kiosks.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 14: Post Office Square</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk down Winter/Summer Street into the Financial District</p>
+                <p class="mt-1"><strong>Placement:</strong> A perimeter streetlamp post on the sidewalk bordering the central park area.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 15: Christopher Columbus Waterfront Park</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk towards Atlantic Ave and the Greenway</p>
+                <p class="mt-1"><strong>Placement:</strong> A prominent signpost or light pole near the park's main Atlantic Ave brick pavilion entrance.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 16: Paul Revere Statue (North End)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 7-minute walk up into the North End along Hanover Street</p>
+                <p class="mt-1"><strong>Placement:</strong> A streetlamp post on Hanover Street directly outside the entrance to the Paul Revere Mall courtyard.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- THE TUFTS & HOME STRETCH -->
+          <div class="space-y-4 pt-4">
+            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
+              <span class="text-brand-celadon font-mono">Phase 5:</span>
+              <span>Tufts & Home Stretch</span>
+            </h2>
+            <div class="space-y-3 pl-1">
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 17: Tufts University (Lower Campus / JCC)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 20 minutes. Walk 5 mins to Haymarket, then Green Line Extension (GLX) Med-Hill branch to Tufts</p>
+                <p class="mt-1"><strong>Placement:</strong> A light pole directly outside the exit of the Tufts GLX station.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 18: Tufts University (Upper Campus)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk up the campus hill</p>
+                <p class="mt-1"><strong>Placement:</strong> A public outdoor bulletin board or utility post near the Mayer Campus Center.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 19: Nathan Tufts Park (Powderhouse Square)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk down College Ave to the rotary</p>
+                <p class="mt-1"><strong>Placement:</strong> A signpost near the main walking path entrance closest to the historic stone powder house.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 20: Teele Square Approach</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk back toward your neighborhood</p>
+                <p class="mt-1"><strong>Placement:</strong> A utility pole on the final stretch of your walk home to anchor the perimeter of your local neighborhood crowd.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CAMPAIGN SUMMARY -->
+          <div class="bg-stone-50 dark:bg-stone-900/40 border border-stone-200 dark:border-stone-850 rounded-2xl p-5 mt-8 space-y-3">
+            <h2 class="text-lg font-bold font-outfit text-brand-black dark:text-brand-white">Total Campaign Timeline</h2>
+            <ul class="list-disc pl-5 space-y-1 mt-2">
+              <li><strong>Total Pure Transit & Walking Time:</strong> ~154 minutes</li>
+              <li><strong>Total Poster Deployment Time:</strong> ~40 minutes (allocating roughly 2 minutes per stop to apply packing tape securely)</li>
+              <li><strong>Total Estimated Duration:</strong> <span class="text-brand-celadon font-bold">3 hours and 14 minutes</span></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Leaflet Map JS -->
@@ -498,7 +686,7 @@
       {
         id: 1,
         name: "Stop 1: Teele Square Border",
-        phase: "Phase 1: The Somerville Launch",
+        phase: "Phase 1: Somerville Launch",
         lat: 42.403463,
         lng: -71.1274382,
         travel: "3-minute walk from 11 Waterhouse St",
@@ -509,7 +697,7 @@
       {
         id: 2,
         name: "Stop 2: Davis Square",
-        phase: "Phase 1: The Somerville Launch",
+        phase: "Phase 1: Somerville Launch",
         lat: 42.3963615,
         lng: -71.1222329,
         travel: "10-minute walk down Holland Street",
@@ -520,7 +708,7 @@
       {
         id: 3,
         name: "Stop 3: Harvard Art Museum",
-        phase: "Phase 2: The Harvard & Allston Pipeline",
+        phase: "Phase 2: Harvard & Allston Pipeline",
         lat: 42.3742178,
         lng: -71.1145269,
         travel: "15 minutes. Red Line (Davis to Harvard) + 5-minute walk to Quincy St",
@@ -531,7 +719,7 @@
       {
         id: 4,
         name: "Stop 4: Eliot Street Bus Stop (Harvard Sq)",
-        phase: "Phase 2: The Harvard & Allston Pipeline",
+        phase: "Phase 2: Harvard & Allston Pipeline",
         lat: 42.3725356,
         lng: -71.1217571,
         travel: "5-minute walk back across Harvard Yard",
@@ -542,7 +730,7 @@
       {
         id: 5,
         name: "Stop 5: Union Square (Allston)",
-        phase: "Phase 2: The Harvard & Allston Pipeline",
+        phase: "Phase 2: Harvard & Allston Pipeline",
         lat: 42.3533999,
         lng: -71.1372661,
         travel: "12 minutes via the 66 Bus from Harvard Square to Union Sq/Brighton Ave stop",
@@ -553,7 +741,7 @@
       {
         id: 6,
         name: "Stop 6: Harvard Ave B-Line Platform",
-        phase: "Phase 2: The Harvard & Allston Pipeline",
+        phase: "Phase 2: Harvard & Allston Pipeline",
         lat: 42.3500068,
         lng: -71.1307027,
         travel: "5-minute walk down Harvard Ave",
@@ -564,7 +752,7 @@
       {
         id: 7,
         name: "Stop 7: Kenmore T Stop",
-        phase: "Phase 3: The Fenway Art Cluster",
+        phase: "Phase 3: Fenway Art Cluster",
         lat: 42.3489029,
         lng: -71.0962064,
         travel: "10 minutes via the Green Line B-Branch (Harvard Ave to Kenmore)",
@@ -575,7 +763,7 @@
       {
         id: 8,
         name: "Stop 8: Isabella Stewart Gardner Museum",
-        phase: "Phase 3: The Fenway Art Cluster",
+        phase: "Phase 3: Fenway Art Cluster",
         lat: 42.3387374,
         lng: -71.097113,
         travel: "12-minute walk down Brookline Ave and Evans Way",
@@ -586,7 +774,7 @@
       {
         id: 9,
         name: "Stop 9: MassArt",
-        phase: "Phase 3: The Fenway Art Cluster",
+        phase: "Phase 3: Fenway Art Cluster",
         lat: 42.3368257,
         lng: -71.0993071,
         travel: "3-minute walk over to Huntington Ave",
@@ -597,7 +785,7 @@
       {
         id: 10,
         name: "Stop 10: Museum of Fine Arts (MFA)",
-        phase: "Phase 3: The Fenway Art Cluster",
+        phase: "Phase 3: Fenway Art Cluster",
         lat: 42.3394573,
         lng: -71.093897,
         travel: "4-minute walk down Huntington Ave",
@@ -674,7 +862,7 @@
       {
         id: 17,
         name: "Stop 17: Tufts University (Lower Campus / JCC)",
-        phase: "Phase 5: The Tufts & Home Stretch",
+        phase: "Phase 5: Tufts & Home Stretch",
         lat: 42.4079403,
         lng: -71.1163782,
         travel: "20 minutes. Walk 5 mins to Haymarket, then Green Line Extension (GLX) Med-Hill branch to Tufts Station",
@@ -685,7 +873,7 @@
       {
         id: 18,
         name: "Stop 18: Tufts University (Upper Campus)",
-        phase: "Phase 5: The Tufts & Home Stretch",
+        phase: "Phase 5: Tufts & Home Stretch",
         lat: 42.4068,
         lng: -71.1197,
         travel: "5-minute walk up the campus hill",
@@ -696,7 +884,7 @@
       {
         id: 19,
         name: "Stop 19: Nathan Tufts Park (Powderhouse Square)",
-        phase: "Phase 5: The Tufts & Home Stretch",
+        phase: "Phase 5: Tufts & Home Stretch",
         lat: 42.4006874,
         lng: -71.1169557,
         travel: "8-minute walk down College Ave to the rotary",
@@ -707,7 +895,7 @@
       {
         id: 20,
         name: "Stop 20: Teele Square Approach",
-        phase: "Phase 5: The Tufts & Home Stretch",
+        phase: "Phase 5: Tufts & Home Stretch",
         lat: 42.4031049,
         lng: -71.1269938,
         travel: "8-minute walk back toward your neighborhood",
@@ -719,11 +907,11 @@
 
     // Build phases list
     const phases = [
-      { name: "Phase 1: The Somerville Launch", startIdx: 1, endIdx: 2 },
-      { name: "Phase 2: The Harvard & Allston Pipeline", startIdx: 3, endIdx: 6 },
-      { name: "Phase 3: The Fenway Art Cluster", startIdx: 7, endIdx: 10 },
+      { name: "Phase 1: Somerville Launch", startIdx: 1, endIdx: 2 },
+      { name: "Phase 2: Harvard & Allston Pipeline", startIdx: 3, endIdx: 6 },
+      { name: "Phase 3: Fenway Art Cluster", startIdx: 7, endIdx: 10 },
       { name: "Phase 4: Back Bay & Downtown", startIdx: 11, endIdx: 16 },
-      { name: "Phase 5: The Tufts & Home Stretch", startIdx: 17, endIdx: 20 }
+      { name: "Phase 5: Tufts & Home Stretch", startIdx: 17, endIdx: 20 }
     ];
 
     // State Variables
@@ -1398,6 +1586,37 @@
           map.remove();
           initMap();
         }
+      });
+
+      // Toggle Notes view click
+      document.getElementById('toggle-notes-view-btn').addEventListener('click', () => {
+        triggerFeedback();
+        const mainLayout = document.getElementById('main-app-layout');
+        const notesLayout = document.getElementById('full-notes-layout');
+        const btnText = document.getElementById('notes-btn-text');
+        const btn = document.getElementById('toggle-notes-view-btn');
+        
+        const showingNotes = notesLayout.classList.contains('hidden');
+        
+        if (showingNotes) {
+          mainLayout.classList.add('hidden');
+          notesLayout.classList.remove('hidden');
+          btnText.innerText = 'Back to Map';
+          btn.className = "text-[10px] sm:text-xs font-semibold text-brand-indigo dark:text-brand-indigoLight hover:bg-brand-indigo/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-indigo/20 bg-brand-indigo/5 ml-2 sm:ml-3 cursor-pointer";
+          btn.querySelector('i').setAttribute('data-lucide', 'map');
+        } else {
+          mainLayout.classList.remove('hidden');
+          notesLayout.classList.add('hidden');
+          btnText.innerText = 'Read Notes';
+          btn.className = "text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-2 sm:ml-3 cursor-pointer";
+          btn.querySelector('i').setAttribute('data-lucide', 'book-open');
+          if (map) {
+            setTimeout(() => {
+              map.invalidateSize();
+            }, 100);
+          }
+        }
+        lucide.createIcons();
       });
     }
 
