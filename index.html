@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
-<<head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ArtZoom Campaign Dashboard · Poster Route</title>
@@ -259,7 +259,7 @@
       <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
         <div class="flex items-center space-x-2">
           <i data-lucide="check-square" class="w-4 h-4 text-brand-celadon"></i>
-          <span>Placed: <span id="placed-count-stat" class="font-bold">0</span>/20</span>
+          <span>Placed: <span id="placed-count-stat" class="font-bold">0</span>/<span id="total-count-stat" class="font-bold">20</span></span>
         </div>
         <div class="flex items-center space-x-2">
           <i data-lucide="clock" class="w-4 h-4 text-brand-celadon"></i>
@@ -324,6 +324,16 @@
           
           <!-- TAB 1: Route & Checklist -->
           <div id="content-list" class="space-y-4">
+            
+            <!-- Day Segmented Selector -->
+            <div class="bg-brand-white dark:bg-brand-black rounded-xl p-1 border border-stone-200 dark:border-stone-800 shadow-sm flex select-none text-xs font-semibold">
+              <button id="day-1-btn" onclick="window.selectDay(1)" class="flex-1 py-2 text-center rounded-lg bg-brand-celadon text-white font-bold transition-all cursor-pointer">
+                Day 1: Tonight (4 stops)
+              </button>
+              <button id="day-2-btn" onclick="window.selectDay(2)" class="flex-1 py-2 text-center rounded-lg text-stone-500 dark:text-stone-400 hover:text-brand-black dark:hover:text-brand-white transition-all cursor-pointer">
+                Day 2: Tomorrow (16 stops)
+              </button>
+            </div>
             
             <!-- Quick Dashboard Widget -->
             <div class="bg-brand-white dark:bg-brand-black rounded-xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
@@ -456,19 +466,19 @@
               <div class="grid grid-cols-2 gap-4 text-sm pt-1">
                 <div class="border border-stone-100 dark:border-stone-900 rounded-lg p-3">
                   <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Total Stops:</span>
-                  <span class="text-lg font-bold font-outfit">20 Locations</span>
+                  <span class="text-lg font-bold font-outfit" id="stats-total-stops">20 Locations</span>
                 </div>
                 <div class="border border-stone-100 dark:border-stone-900 rounded-lg p-3">
                   <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Estimated Time:</span>
-                  <span class="text-lg font-bold font-outfit">3h 14m</span>
+                  <span class="text-lg font-bold font-outfit" id="stats-est-time">3h 14m</span>
                 </div>
                 <div class="border border-stone-100 dark:border-stone-900 rounded-lg p-3">
                   <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Transit & Walk:</span>
-                  <span class="text-lg font-bold font-outfit">~154 mins</span>
+                  <span class="text-lg font-bold font-outfit" id="stats-transit-walk">~154 mins</span>
                 </div>
                 <div class="border border-stone-100 dark:border-stone-900 rounded-lg p-3">
                   <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Poster Hanging:</span>
-                  <span class="text-lg font-bold font-outfit">~40 mins</span>
+                  <span class="text-lg font-bold font-outfit" id="stats-poster-hanging">~40 mins</span>
                 </div>
               </div>
             </div>
@@ -476,7 +486,7 @@
             <!-- Transit Systems Used -->
             <div class="bg-brand-white dark:bg-brand-black rounded-xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm space-y-3.5">
               <h3 class="text-sm font-bold font-outfit uppercase tracking-wider text-brand-celadon">Transit Network Checkpoints</h3>
-              <div class="space-y-2.5 text-xs">
+              <div class="space-y-2.5 text-xs" id="stats-transit-container">
                 
                 <div class="flex items-center justify-between p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-700 dark:text-red-400 font-semibold">
                   <div class="flex items-center space-x-2">
@@ -579,23 +589,22 @@
         <div class="border-b border-stone-200 dark:border-stone-800 pb-6">
           <h1 class="text-3xl font-bold font-outfit tracking-tight text-brand-black dark:text-brand-white sm:text-4xl">Guerrilla Marketing Blueprint</h1>
           <p class="text-sm sm:text-base text-stone-500 dark:text-stone-400 mt-2 font-medium font-outfit">
-            Transit-Optimized, Rapid-Succession Route for 20 Poster Deployments
+            Two-Day Transit-Optimized Poster Deployment Route
           </p>
           <div class="flex flex-wrap gap-2 mt-4">
-            <span class="text-xs font-semibold px-2.5 py-1 bg-brand-celadon/10 text-brand-celadon dark:text-brand-celadonLight rounded-full">Total: 3h 14m</span>
-            <span class="text-xs font-semibold px-2.5 py-1 bg-brand-indigo/10 text-[#4f82d1] rounded-full">20 Locations</span>
-            <span class="text-xs font-semibold px-2.5 py-1 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 rounded-full">Starts/Ends: 11 Waterhouse St</span>
+            <span class="text-xs font-semibold px-2.5 py-1 bg-brand-celadon/10 text-brand-celadon dark:text-brand-celadonLight rounded-full">Day 1: Tonight (42m)</span>
+            <span class="text-xs font-semibold px-2.5 py-1 bg-brand-indigo/10 text-[#4f82d1] rounded-full">Day 2: Tomorrow (3h 34m)</span>
+            <span class="text-xs font-semibold px-2.5 py-1 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 rounded-full">20 Poster Locations + Transit Nodes</span>
           </div>
         </div>
 
         <!-- Instructions content -->
         <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed text-stone-700 dark:text-stone-300">
           
-          <!-- SOMERVILLE LAUNCH -->
+          <!-- DAY 1 -->
           <div class="space-y-4">
-            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
-              <span class="text-brand-celadon font-mono">Phase 1:</span>
-              <span>Somerville Launch</span>
+            <h2 class="text-2xl font-bold font-outfit text-brand-black dark:text-brand-white border-b-2 border-brand-celadon pb-2 flex items-center space-x-2">
+              <span>Day 1: Tonight — Somerville & Tufts</span>
             </h2>
             <div class="space-y-3 pl-1">
               <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
@@ -608,175 +617,156 @@
                 <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 10-minute walk down Holland Street</p>
                 <p class="mt-1"><strong>Placement:</strong> The large metal utility control box directly outside the main Davis T Station entrance. Catches commuters heading underground.</p>
               </div>
-            </div>
-          </div>
-
-          <!-- HARVARD & ALLSTON PIPELINE -->
-          <div class="space-y-4 pt-4">
-            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
-              <span class="text-brand-celadon font-mono">Phase 2:</span>
-              <span>Harvard & Allston Pipeline</span>
-            </h2>
-            <div class="space-y-3 pl-1">
               <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 3: Harvard Art Museum</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 15 minutes via Red Line (Davis to Harvard) + 5-minute walk to Quincy St</p>
-                <p class="mt-1"><strong>Placement:</strong> The crosswalk button pole directly across from the museum entrance. Targets the art-enthusiast demographic.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 4: Eliot Street Bus Stop (Harvard Sq)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk back across Harvard Yard</p>
-                <p class="mt-1"><strong>Placement:</strong> On the exterior metal frame of the bus shelter. High dwell time for people waiting for the bus.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 5: Union Square (Allston)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12 minutes via the 66 Bus from Harvard Square to Union Sq/Brighton Ave stop</p>
-                <p class="mt-1"><strong>Placement:</strong> Light pole near the main Cambridge Street and Brighton Ave convergence, right where pedestrians wait to cross.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 6: Harvard Ave B-Line Platform</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk down Harvard Ave</p>
-                <p class="mt-1"><strong>Placement:</strong> The traffic light post directly on the concrete pedestrian street island. Visible to commuters waiting for the B-Line train.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- FENWAY ART CLUSTER -->
-          <div class="space-y-4 pt-4">
-            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
-              <span class="text-brand-celadon font-mono">Phase 3:</span>
-              <span>Fenway Art Cluster</span>
-            </h2>
-            <div class="space-y-3 pl-1">
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 7: Kenmore T Stop</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 10 minutes via Green Line B-Branch (Harvard Ave to Kenmore)</p>
-                <p class="mt-1"><strong>Placement:</strong> A utility box right outside the main bus loop/subway entrance.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 8: Isabella Stewart Gardner Museum</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12-minute walk down Brookline Ave and Evans Way</p>
-                <p class="mt-1"><strong>Placement:</strong> Street sign pole on the sidewalk perimeter facing Evans Way park, capturing the museum queue crowd.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 9: MassArt</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 3-minute walk over to Huntington Ave</p>
-                <p class="mt-1"><strong>Placement:</strong> The crosswalk pole directly in front of the main MassArt campus building. Targets design and art students.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 10: Museum of Fine Arts (MFA)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 4-minute walk down Huntington Ave</p>
-                <p class="mt-1"><strong>Placement:</strong> Light post immediately adjacent to the MFA Green Line E-Branch stop.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- BACK BAY & DOWNTOWN -->
-          <div class="space-y-4 pt-4">
-            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
-              <span class="text-brand-celadon font-mono">Phase 4:</span>
-              <span>Back Bay & Downtown</span>
-            </h2>
-            <div class="space-y-3 pl-1">
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 11: Boston Public Library (Copley)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8 minutes via Green Line E-Branch (MFA to Copley)</p>
-                <p class="mt-1"><strong>Placement:</strong> Heavy traffic control box at the busy corner of Boylston Street and Dartmouth Street.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 12: Boston Common (Arlington Side)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk down Boylston Street</p>
-                <p class="mt-1"><strong>Placement:</strong> A perimeter utility pole right at the corner of the park, directly across from the Arlington T exit.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 13: Boston Common (Park Street Side)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk across Tremont Street side of the Common</p>
-                <p class="mt-1"><strong>Placement:</strong> The metal traffic control box situated right next to the historic Park Street T station kiosks.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 14: Post Office Square</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk down Winter/Summer Street into the Financial District</p>
-                <p class="mt-1"><strong>Placement:</strong> A perimeter streetlamp post on the sidewalk bordering the central park area.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 15: Christopher Columbus Waterfront Park</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk towards Atlantic Ave and the Greenway</p>
-                <p class="mt-1"><strong>Placement:</strong> A prominent signpost or light pole near the park's main Atlantic Ave brick pavilion entrance.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 16: Paul Revere Statue (North End)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 7-minute walk up into the North End along Hanover Street</p>
-                <p class="mt-1"><strong>Placement:</strong> A streetlamp post on Hanover Street directly outside the entrance to the Paul Revere Mall courtyard.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- THE TUFTS & HOME STRETCH -->
-          <div class="space-y-4 pt-4">
-            <h2 class="text-xl font-bold font-outfit text-brand-black dark:text-brand-white border-b border-stone-100 dark:border-stone-900 pb-2 flex items-center space-x-2">
-              <span class="text-brand-celadon font-mono">Phase 5:</span>
-              <span>Tufts & Home Stretch</span>
-            </h2>
-            <div class="space-y-3 pl-1">
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 17: Tufts University (Lower Campus / JCC)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 20 minutes. Walk 5 mins to Haymarket, then Green Line Extension (GLX) Med-Hill branch to Tufts</p>
-                <p class="mt-1"><strong>Placement:</strong> A light pole directly outside the exit of the Tufts GLX station.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 18: Tufts University (Upper Campus)</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk up the campus hill</p>
-                <p class="mt-1"><strong>Placement:</strong> A public outdoor bulletin board or utility post near the Mayer Campus Center.</p>
-              </div>
-              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 19: Nathan Tufts Park (Powderhouse Square)</h3>
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 3: Nathan Tufts Park (Powderhouse Square)</h3>
                 <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk down College Ave to the rotary</p>
                 <p class="mt-1"><strong>Placement:</strong> A signpost near the main walking path entrance closest to the historic stone powder house.</p>
               </div>
               <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
-                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 20: Teele Square Approach</h3>
-                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk back toward your neighborhood</p>
-                <p class="mt-1"><strong>Placement:</strong> A utility pole on the final stretch of your walk home to anchor the perimeter of your local neighborhood crowd.</p>
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 4: Tufts University (Upper Campus)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk up the campus hill</p>
+                <p class="mt-1"><strong>Placement:</strong> A public outdoor bulletin board or utility post near the Mayer Campus Center.</p>
               </div>
             </div>
           </div>
 
-          <!-- CAMPAIGN SUMMARY -->
-          <div class="bg-stone-50 dark:bg-stone-900/40 border border-stone-200 dark:border-stone-850 rounded-2xl p-5 mt-8 space-y-3">
-            <h2 class="text-lg font-bold font-outfit text-brand-black dark:text-brand-white">Total Campaign Timeline</h2>
-            <ul class="list-disc pl-5 space-y-1 mt-2">
-              <li><strong>Total Pure Transit & Walking Time:</strong> ~154 minutes</li>
-              <li><strong>Total Poster Deployment Time:</strong> ~40 minutes (allocating roughly 2 minutes per stop to apply packing tape securely)</li>
-              <li><strong>Total Estimated Duration:</strong> <span class="text-brand-celadon font-bold">3 hours and 14 minutes</span></li>
-            </ul>
+          <!-- DAY 2 -->
+          <div class="space-y-4 pt-6">
+            <h2 class="text-2xl font-bold font-outfit text-brand-black dark:text-brand-white border-b-2 border-blue-500 pb-2 flex items-center space-x-2">
+              <span>Day 2: Tomorrow — Harvard, Boston & Cambridge</span>
+            </h2>
+            <div class="space-y-3 pl-1">
+              <div class="border-l-2 border-blue-500/30 pl-4 py-1">
+                <h3 class="font-bold text-blue-600 dark:text-blue-400">Transit Leg: Davis Square T Station</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 10-minute walk from 11 Waterhouse St</p>
+                <p class="mt-1"><strong>Directions:</strong> Enter Davis Square T Station. Board the Red Line Outbound train toward Ashmont/Braintree.</p>
+              </div>
+              <div class="border-l-2 border-blue-500/30 pl-4 py-1">
+                <h3 class="font-bold text-blue-600 dark:text-blue-400">Transit Leg: Harvard Square T Station</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute Red Line ride</p>
+                <p class="mt-1"><strong>Directions:</strong> Exit Harvard Station and walk east through Harvard Yard to Quincy Street.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 1: Harvard Art Museum</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk from Harvard Station</p>
+                <p class="mt-1"><strong>Placement:</strong> The crosswalk button pole directly across from the museum entrance. Targets art-enthusiasts.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 2: Eliot Street Bus Stop (Harvard Sq)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk back across Harvard Yard</p>
+                <p class="mt-1"><strong>Placement:</strong> On the exterior metal frame of the bus shelter. Board the 66 Bus to Allston from here.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 3: Union Square (Allston)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12 minutes via the 66 Bus</p>
+                <p class="mt-1"><strong>Placement:</strong> Light pole near the main Cambridge Street and Brighton Ave convergence.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 4: Harvard Ave B-Line Platform</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk down Harvard Ave</p>
+                <p class="mt-1"><strong>Placement:</strong> The traffic light post directly on the concrete pedestrian street island. Board Green Line B here.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 5: Kenmore T Stop</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 10 minutes via Green Line B-Branch</p>
+                <p class="mt-1"><strong>Placement:</strong> A utility box right outside the main bus loop/subway entrance.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 6: Isabella Stewart Gardner Museum</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12-minute walk down Brookline Ave and Evans Way</p>
+                <p class="mt-1"><strong>Placement:</strong> Street sign pole on the sidewalk perimeter facing Evans Way park.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 7: MassArt</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 3-minute walk to Huntington Ave</p>
+                <p class="mt-1"><strong>Placement:</strong> The crosswalk pole directly in front of the main MassArt campus building.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 8: Museum of Fine Arts (MFA)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 4-minute walk down Huntington Ave</p>
+                <p class="mt-1"><strong>Placement:</strong> Light post immediately adjacent to the MFA Green Line E-Branch stop. Board Green Line E here.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 9: Boston Public Library (Copley)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8 minutes via Green Line E-Branch</p>
+                <p class="mt-1"><strong>Placement:</strong> Heavy traffic control box at the busy corner of Boylston Street and Dartmouth Street.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 10: Boston Common (Arlington Side)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 5-minute walk down Boylston Street</p>
+                <p class="mt-1"><strong>Placement:</strong> A perimeter utility pole right at the corner of the park, directly across from the Arlington T exit.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 11: ICA Seaport</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 30-minute walk from Arlington side of Boston Common</p>
+                <p class="mt-1"><strong>Placement:</strong> Signpost near the Harborwalk entrance outside the ICA museum lobby.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 12: Christopher Columbus Waterfront Park</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 12-minute walk along Harborwalk / Greenway</p>
+                <p class="mt-1"><strong>Placement:</strong> A prominent signpost or light pole near the park's main Atlantic Ave brick pavilion entrance.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 13: Post Office Square</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk down Milk Street</p>
+                <p class="mt-1"><strong>Placement:</strong> A perimeter streetlamp post on the sidewalk bordering the central park area.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 14: Boston Common (Park Street Side)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 8-minute walk to Park Street T Station</p>
+                <p class="mt-1"><strong>Placement:</strong> The metal traffic control box situated right next to the historic Park Street T station kiosks. Board Red Line here.</p>
+              </div>
+              <div class="border-l-2 border-blue-500/30 pl-4 py-1">
+                <h3 class="font-bold text-blue-600 dark:text-blue-400">Transit Leg: Kendall/MIT T Station</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 6 minutes via Red Line from Park Street</p>
+                <p class="mt-1"><strong>Directions:</strong> Exit Kendall/MIT Station and walk to Ames Street.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 15: MIT List Visual Arts Center</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 3-minute walk from Kendall T Station</p>
+                <p class="mt-1"><strong>Placement:</strong> The street sign or light post on Ames Street directly outside the Wiesner Building entrance.</p>
+              </div>
+              <div class="border-l-2 border-brand-celadon/30 pl-4 py-1">
+                <h3 class="font-bold text-brand-black dark:text-brand-white">Stop 16: MIT Museum (Kendall Square)</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 3-minute walk down Main Street</p>
+                <p class="mt-1"><strong>Placement:</strong> A light post or utility structure directly outside the main MIT Museum entrance at 314 Main St.</p>
+              </div>
+              <div class="border-l-2 border-blue-500/30 pl-4 py-1">
+                <h3 class="font-bold text-blue-600 dark:text-blue-400">Transit Leg: Return from Kendall to Davis</h3>
+                <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Travel: 18 minutes (Red Line + 10-minute walk home)</p>
+                <p class="mt-1"><strong>Directions:</strong> Take Red Line Inbound back to Davis Square, then walk home to 11 Waterhouse St.</p>
+              </div>
+            </div>
           </div>
-
+          
         </div>
       </div>
     </div>
   </div>
 
   <!-- Leaflet Map JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  
-  <script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>  <script>
     // Data definition for coordinates and details
     const campaignStops = [
       {
         id: 0,
+        day: 0, // special home base
+        type: "home",
         name: "Start/End: 11 Waterhouse St",
-        phase: "Start Point",
         lat: 42.4056379,
         lng: -71.1322897,
         travel: "Home Base",
         placement: "Starting Point",
-        details: "Your starting point for the campaign. Return here at the end of the route.",
+        details: "Your starting point and final return location.",
         transitMinutes: 0
       },
+      // Day 1
       {
         id: 1,
+        day: 1,
+        type: "poster",
+        displayId: 1,
         name: "Stop 1: Teele Square Border",
-        phase: "Phase 1: Somerville Launch",
         lat: 42.403463,
         lng: -71.1274382,
         travel: "3-minute walk from 11 Waterhouse St",
@@ -786,8 +776,10 @@
       },
       {
         id: 2,
+        day: 1,
+        type: "poster",
+        displayId: 2,
         name: "Stop 2: Davis Square",
-        phase: "Phase 1: Somerville Launch",
         lat: 42.3963615,
         lng: -71.1222329,
         travel: "10-minute walk down Holland Street",
@@ -797,184 +789,10 @@
       },
       {
         id: 3,
-        name: "Stop 3: Harvard Art Museum",
-        phase: "Phase 2: Harvard & Allston Pipeline",
-        lat: 42.3742178,
-        lng: -71.1145269,
-        travel: "15 minutes. Red Line (Davis to Harvard) + 5-minute walk to Quincy St",
-        placement: "The crosswalk button pole directly across from the museum entrance",
-        details: "Directly targets your core art-enthusiast demographic visiting the Harvard Art Museums.",
-        transitMinutes: 15
-      },
-      {
-        id: 4,
-        name: "Stop 4: Eliot Street Bus Stop (Harvard Sq)",
-        phase: "Phase 2: Harvard & Allston Pipeline",
-        lat: 42.3725356,
-        lng: -71.1217571,
-        travel: "5-minute walk back across Harvard Yard",
-        placement: "On the exterior metal frame of the bus shelter",
-        details: "People waiting for the bus have high dwell time, allowing easy scanning before boarding.",
-        transitMinutes: 5
-      },
-      {
-        id: 5,
-        name: "Stop 5: Union Square (Allston)",
-        phase: "Phase 2: Harvard & Allston Pipeline",
-        lat: 42.3533999,
-        lng: -71.1372661,
-        travel: "12 minutes via the 66 Bus from Harvard Square to Union Sq/Brighton Ave stop",
-        placement: "Light pole near the main Cambridge Street and Brighton Ave convergence",
-        details: "Placed right where pedestrians wait to cross Brighton Ave. High student foot traffic.",
-        transitMinutes: 12
-      },
-      {
-        id: 6,
-        name: "Stop 6: Harvard Ave B-Line Platform",
-        phase: "Phase 2: Harvard & Allston Pipeline",
-        lat: 42.3500068,
-        lng: -71.1307027,
-        travel: "5-minute walk down Harvard Ave",
-        placement: "The traffic light post directly on the concrete pedestrian street island",
-        details: "Targets commuters standing on the island waiting to board the Green Line B-Line train.",
-        transitMinutes: 5
-      },
-      {
-        id: 7,
-        name: "Stop 7: Kenmore T Stop",
-        phase: "Phase 3: Fenway Art Cluster",
-        lat: 42.3489029,
-        lng: -71.0962064,
-        travel: "10 minutes via the Green Line B-Branch (Harvard Ave to Kenmore)",
-        placement: "A utility box right outside the main bus loop/subway entrance",
-        details: "Highly visible to both BU students and commuters entering Kenmore station.",
-        transitMinutes: 10
-      },
-      {
-        id: 8,
-        name: "Stop 8: Isabella Stewart Gardner Museum",
-        phase: "Phase 3: Fenway Art Cluster",
-        lat: 42.3387374,
-        lng: -71.097113,
-        travel: "12-minute walk down Brookline Ave and Evans Way",
-        placement: "Street sign pole on the sidewalk perimeter facing Evans Way park",
-        details: "Captures visitors standing in the outdoor museum queue queueing along Evans Way.",
-        transitMinutes: 12
-      },
-      {
-        id: 9,
-        name: "Stop 9: MassArt",
-        phase: "Phase 3: Fenway Art Cluster",
-        lat: 42.3368257,
-        lng: -71.0993071,
-        travel: "3-minute walk over to Huntington Ave",
-        placement: "The crosswalk pole directly in front of the main MassArt campus building",
-        details: "Direct hit for design, illustration, and fine art students exiting the main lobby.",
-        transitMinutes: 3
-      },
-      {
-        id: 10,
-        name: "Stop 10: Museum of Fine Arts (MFA)",
-        phase: "Phase 3: Fenway Art Cluster",
-        lat: 42.3394573,
-        lng: -71.093897,
-        travel: "4-minute walk down Huntington Ave",
-        placement: "Light post immediately adjacent to the MFA Green Line E-Branch stop",
-        details: "Commuters and art gallery visitors waiting for the Green Line train will look right at it.",
-        transitMinutes: 4
-      },
-      {
-        id: 11,
-        name: "Stop 11: Boston Public Library (Copley)",
-        phase: "Phase 4: Back Bay & Downtown",
-        lat: 42.3499065,
-        lng: -71.0777913,
-        travel: "8 minutes via the Green Line E-Branch (MFA to Copley)",
-        placement: "Heavy traffic control box at the busy corner of Boylston Street and Dartmouth Street",
-        details: "Extremely high visibility next to Copley Square and the historic BPL building.",
-        transitMinutes: 8
-      },
-      {
-        id: 12,
-        name: "Stop 12: Boston Common (Arlington Side)",
-        phase: "Phase 4: Back Bay & Downtown",
-        lat: 42.3518976,
-        lng: -71.0707345,
-        travel: "5-minute walk down Boylston Street",
-        placement: "A perimeter utility pole right at the corner of the park, directly across from the Arlington T exit",
-        details: "Catches commuters walking into the Common from the subway stairs.",
-        transitMinutes: 5
-      },
-      {
-        id: 13,
-        name: "Stop 13: Boston Common (Park Street Side)",
-        phase: "Phase 4: Back Bay & Downtown",
-        lat: 42.356346,
-        lng: -71.0623753,
-        travel: "8-minute walk across the Tremont Street side of the Common",
-        placement: "The metal traffic control box situated right next to the historic Park Street T station kiosks",
-        details: "Massive hub. Targets transit changers and park visitors in central Boston.",
-        transitMinutes: 8
-      },
-      {
-        id: 14,
-        name: "Stop 14: Post Office Square",
-        phase: "Phase 4: Back Bay & Downtown",
-        lat: 42.3564297,
-        lng: -71.0557194,
-        travel: "8-minute walk down Winter/Summer Street into the Financial District",
-        placement: "A perimeter streetlamp post on the sidewalk bordering the central park area",
-        details: "Grabs attention of white-collar workers and food truck lines at lunch/commute hours.",
-        transitMinutes: 8
-      },
-      {
-        id: 15,
-        name: "Stop 15: Christopher Columbus Waterfront Park",
-        phase: "Phase 4: Back Bay & Downtown",
-        lat: 42.3557612,
-        lng: -71.0508834,
-        travel: "8-minute walk towards Atlantic Ave and the Greenway",
-        placement: "A prominent signpost or light pole near the park's main Atlantic Ave brick pavilion entrance",
-        details: "Targets heavy pedestrian traffic near the North End border and the Rose Kennedy Greenway.",
-        transitMinutes: 8
-      },
-      {
-        id: 16,
-        name: "Stop 16: Paul Revere Statue (North End)",
-        phase: "Phase 4: Back Bay & Downtown",
-        lat: 42.3663051,
-        lng: -71.0527491,
-        travel: "7-minute walk up into the North End along Hanover Street",
-        placement: "A streetlamp post on Hanover Street directly outside the entrance to the Paul Revere Mall courtyard",
-        details: "Highly populated tourist route and dense residential neighborhood zone.",
-        transitMinutes: 7
-      },
-      {
-        id: 17,
-        name: "Stop 17: Tufts University (Lower Campus / JCC)",
-        phase: "Phase 5: Tufts & Home Stretch",
-        lat: 42.4079403,
-        lng: -71.1163782,
-        travel: "20 minutes. Walk 5 mins to Haymarket, then Green Line Extension (GLX) Med-Hill branch to Tufts Station",
-        placement: "A light pole directly outside the exit of the Tufts GLX station",
-        details: "Catches students coming off the GLX train platform and heading toward the Joyce Cummings Center.",
-        transitMinutes: 20
-      },
-      {
-        id: 18,
-        name: "Stop 18: Tufts University (Upper Campus)",
-        phase: "Phase 5: Tufts & Home Stretch",
-        lat: 42.4068,
-        lng: -71.1197,
-        travel: "5-minute walk up the campus hill",
-        placement: "A public outdoor bulletin board or utility post near the Mayer Campus Center",
-        details: "Student center bulletin board. Targets high density student hub.",
-        transitMinutes: 5
-      },
-      {
-        id: 19,
-        name: "Stop 19: Nathan Tufts Park (Powderhouse Square)",
-        phase: "Phase 5: Tufts & Home Stretch",
+        day: 1,
+        type: "poster",
+        displayId: 3,
+        name: "Stop 3: Nathan Tufts Park (Powderhouse Square)",
         lat: 42.4006874,
         lng: -71.1169557,
         travel: "8-minute walk down College Ave to the rotary",
@@ -983,28 +801,306 @@
         transitMinutes: 8
       },
       {
-        id: 20,
-        name: "Stop 20: Teele Square Approach",
-        phase: "Phase 5: Tufts & Home Stretch",
-        lat: 42.4031049,
-        lng: -71.1269938,
-        travel: "8-minute walk back toward your neighborhood",
-        placement: "A utility pole on the final stretch of your walk home to anchor the perimeter of your local neighborhood crowd",
-        details: "Catches local residents walking along Broadway near Teele Square.",
+        id: 4,
+        day: 1,
+        type: "poster",
+        displayId: 4,
+        name: "Stop 4: Tufts University (Upper Campus)",
+        lat: 42.4068,
+        lng: -71.1197,
+        travel: "5-minute walk up the campus hill",
+        placement: "A public outdoor bulletin board or utility post near the Mayer Campus Center",
+        details: "Student center bulletin board. Targets high density student hub.",
+        transitMinutes: 5
+      },
+      // Day 2
+      {
+        id: 5,
+        day: 2,
+        type: "transit",
+        name: "Transit: Davis Square T Station",
+        lat: 42.3967,
+        lng: -71.1218,
+        travel: "10-minute walk from 11 Waterhouse St",
+        placement: "Davis Square Subway Station Entrance",
+        details: "Enter Davis Square Station. Take Red Line Outbound toward Ashmont/Braintree to Harvard.",
+        transitMinutes: 10
+      },
+      {
+        id: 6,
+        day: 2,
+        type: "transit",
+        name: "Transit: Harvard Square T Station",
+        lat: 42.3736,
+        lng: -71.1189,
+        travel: "5-minute Red Line transit",
+        placement: "Harvard Square Subway Station Exit",
+        details: "Exit Harvard Station. Walk to Harvard Art Museum on Quincy Street.",
+        transitMinutes: 5
+      },
+      {
+        id: 7,
+        day: 2,
+        type: "poster",
+        displayId: 1,
+        name: "Stop 1: Harvard Art Museum",
+        lat: 42.3742178,
+        lng: -71.1145269,
+        travel: "5-minute walk from Harvard T Station",
+        placement: "The crosswalk button pole directly across from the museum entrance",
+        details: "Directly targets your core art-enthusiast demographic visiting the Harvard Art Museums.",
+        transitMinutes: 5
+      },
+      {
+        id: 8,
+        day: 2,
+        type: "poster",
+        displayId: 2,
+        name: "Stop 2: Eliot Street Bus Stop (Harvard Sq)",
+        lat: 42.3725356,
+        lng: -71.1217571,
+        travel: "5-minute walk back across Harvard Yard",
+        placement: "On the exterior metal frame of the bus shelter",
+        details: "People waiting for the bus have high dwell time, allowing easy scanning before boarding the 66 Bus.",
+        transitMinutes: 5
+      },
+      {
+        id: 9,
+        day: 2,
+        type: "poster",
+        displayId: 3,
+        name: "Stop 3: Union Square (Allston)",
+        lat: 42.3533999,
+        lng: -71.1372661,
+        travel: "12 minutes via the 66 Bus from Harvard Square to Union Sq/Brighton Ave stop",
+        placement: "Light pole near the main Cambridge Street and Brighton Ave convergence",
+        details: "Placed right where pedestrians wait to cross Brighton Ave. High student foot traffic.",
+        transitMinutes: 12
+      },
+      {
+        id: 10,
+        day: 2,
+        type: "poster",
+        displayId: 4,
+        name: "Stop 4: Harvard Ave B-Line Platform",
+        lat: 42.3500068,
+        lng: -71.1307027,
+        travel: "5-minute walk down Harvard Ave",
+        placement: "The traffic light post directly on the concrete pedestrian street island",
+        details: "Targets commuters standing on the island waiting to board the Green Line B-Line train.",
+        transitMinutes: 5
+      },
+      {
+        id: 11,
+        day: 2,
+        type: "poster",
+        displayId: 5,
+        name: "Stop 5: Kenmore T Stop",
+        lat: 42.3489029,
+        lng: -71.0962064,
+        travel: "10 minutes via the Green Line B-Branch (Harvard Ave to Kenmore)",
+        placement: "A utility box right outside the main bus loop/subway entrance",
+        details: "Highly visible to both BU students and commuters entering Kenmore station.",
+        transitMinutes: 10
+      },
+      {
+        id: 12,
+        day: 2,
+        type: "poster",
+        displayId: 6,
+        name: "Stop 6: Isabella Stewart Gardner Museum",
+        lat: 42.3387374,
+        lng: -71.097113,
+        travel: "12-minute walk down Brookline Ave and Evans Way",
+        placement: "Street sign pole on the sidewalk perimeter facing Evans Way park",
+        details: "Captures visitors standing in the outdoor museum queue queueing along Evans Way.",
+        transitMinutes: 12
+      },
+      {
+        id: 13,
+        day: 2,
+        type: "poster",
+        displayId: 7,
+        name: "Stop 7: MassArt",
+        lat: 42.3368257,
+        lng: -71.0993071,
+        travel: "3-minute walk over to Huntington Ave",
+        placement: "The crosswalk pole directly in front of the main MassArt campus building",
+        details: "Direct hit for design, illustration, and fine art students exiting the main lobby.",
+        transitMinutes: 3
+      },
+      {
+        id: 14,
+        day: 2,
+        type: "poster",
+        displayId: 8,
+        name: "Stop 8: Museum of Fine Arts (MFA)",
+        lat: 42.3394573,
+        lng: -71.093897,
+        travel: "4-minute walk down Huntington Ave",
+        placement: "Light post immediately adjacent to the MFA Green Line E-Branch stop",
+        details: "Commuters and art gallery visitors waiting for the Green Line train will look right at it.",
+        transitMinutes: 4
+      },
+      {
+        id: 15,
+        day: 2,
+        type: "poster",
+        displayId: 9,
+        name: "Stop 9: Boston Public Library (Copley)",
+        lat: 42.3499065,
+        lng: -71.0777913,
+        travel: "8 minutes via the Green Line E-Branch (MFA to Copley)",
+        placement: "Heavy traffic control box at the busy corner of Boylston Street and Dartmouth Street",
+        details: "Extremely high visibility next to Copley Square and the historic BPL building.",
         transitMinutes: 8
+      },
+      {
+        id: 16,
+        day: 2,
+        type: "poster",
+        displayId: 10,
+        name: "Stop 10: Boston Common (Arlington Side)",
+        lat: 42.3518976,
+        lng: -71.0707345,
+        travel: "5-minute walk down Boylston Street",
+        placement: "A perimeter utility pole right at the corner of the park, directly across from the Arlington T exit",
+        details: "Catches commuters walking into the Common from the subway stairs.",
+        transitMinutes: 5
+      },
+      {
+        id: 17,
+        day: 2,
+        type: "poster",
+        displayId: 11,
+        name: "Stop 11: ICA Seaport",
+        lat: 42.352843,
+        lng: -71.042857,
+        travel: "30-minute walk from Boston Common (Arlington Side)",
+        placement: "Signpost near the Harborwalk entrance outside the ICA museum lobby",
+        details: "Targets museum-goers and tourists visiting the Boston Seaport Harborwalk. Walk directly from Boston Common (Arlington Side) via Boylston St, Essex St, and Northern Ave.",
+        transitMinutes: 30
+      },
+      {
+        id: 18,
+        day: 2,
+        type: "poster",
+        displayId: 12,
+        name: "Stop 12: Christopher Columbus Waterfront Park",
+        lat: 42.3557612,
+        lng: -71.0508834,
+        travel: "12-minute walk along Harborwalk / Greenway from Seaport",
+        placement: "A prominent signpost or light pole near the park's main Atlantic Ave brick pavilion entrance",
+        details: "Targets heavy pedestrian traffic near the North End border and the Rose Kennedy Greenway.",
+        transitMinutes: 12
+      },
+      {
+        id: 19,
+        day: 2,
+        type: "poster",
+        displayId: 13,
+        name: "Stop 13: Post Office Square",
+        lat: 42.3564297,
+        lng: -71.0557194,
+        travel: "8-minute walk down Milk Street into the Financial District",
+        placement: "A perimeter streetlamp post on the sidewalk bordering the central park area",
+        details: "Grabs attention of white-collar workers and food truck lines at lunch/commute hours.",
+        transitMinutes: 8
+      },
+      {
+        id: 20,
+        day: 2,
+        type: "poster",
+        displayId: 14,
+        name: "Stop 14: Boston Common (Park Street Side)",
+        lat: 42.356346,
+        lng: -71.0623753,
+        travel: "8-minute walk from Post Office Square to Park Street T Station",
+        placement: "The metal traffic control box situated right next to the historic Park Street T station kiosks",
+        details: "Massive hub. Targets transit changers and park visitors in central Boston.",
+        transitMinutes: 8
+      },
+      {
+        id: 21,
+        day: 2,
+        type: "transit",
+        name: "Transit: Kendall/MIT T Station",
+        lat: 42.3624,
+        lng: -71.0861,
+        travel: "6-minute Red Line transit from Park Street",
+        placement: "Kendall/MIT Subway Station Exit",
+        details: "Take Red Line Inbound to Kendall/MIT. Exit and walk to MIT List Visual Arts Center on Ames Street.",
+        transitMinutes: 6
+      },
+      {
+        id: 22,
+        day: 2,
+        type: "poster",
+        displayId: 15,
+        name: "Stop 15: MIT List Visual Arts Center",
+        lat: 42.3610052,
+        lng: -71.0878262,
+        travel: "3-minute walk from Kendall T Station",
+        placement: "The street sign or light post on Ames Street directly outside the Wiesner Building entrance",
+        details: "Captures MIT students, researchers, and modern art enthusiasts visiting the List Center galleries.",
+        transitMinutes: 3
+      },
+      {
+        id: 23,
+        day: 2,
+        type: "poster",
+        displayId: 16,
+        name: "Stop 16: MIT Museum (Kendall Square)",
+        lat: 42.3621,
+        lng: -71.0867,
+        travel: "3-minute walk down Main Street",
+        placement: "A light post or utility structure directly outside the main MIT Museum entrance at 314 Main St",
+        details: "Heavy foot traffic right next to the Kendall T station exit, targeting students, tourists, and tech workers.",
+        transitMinutes: 3
+      },
+      {
+        id: 24,
+        day: 2,
+        type: "transit",
+        name: "Transit: Return to Kendall/MIT",
+        lat: 42.3624,
+        lng: -71.0861,
+        travel: "3-minute walk back to station",
+        placement: "Kendall/MIT Subway Station Entrance",
+        details: "Take Red Line Inbound toward Alewife back to Davis Square.",
+        transitMinutes: 3
+      },
+      {
+        id: 25,
+        day: 2,
+        type: "transit",
+        name: "Transit: Davis Square T Station (Exit)",
+        lat: 42.3967,
+        lng: -71.1218,
+        travel: "15-minute Red Line transit from Kendall",
+        placement: "Davis Square Subway Station Exit",
+        details: "Exit Davis Station. Walk back home to 11 Waterhouse St.",
+        transitMinutes: 15
       }
     ];
 
-    // Build phases list
-    const phases = [
-      { name: "Phase 1: Somerville Launch", startIdx: 1, endIdx: 2 },
-      { name: "Phase 2: Harvard & Allston Pipeline", startIdx: 3, endIdx: 6 },
-      { name: "Phase 3: Fenway Art Cluster", startIdx: 7, endIdx: 10 },
-      { name: "Phase 4: Back Bay & Downtown", startIdx: 11, endIdx: 16 },
-      { name: "Phase 5: Tufts & Home Stretch", startIdx: 17, endIdx: 20 }
-    ];
+    // Build phases list per day
+    const phases = {
+      1: [
+        { name: "Phase 1: Somerville Launch", startIdx: 1, endIdx: 2 },
+        { name: "Phase 2: Tufts & Powderhouse", startIdx: 3, endIdx: 4 }
+      ],
+      2: [
+        { name: "Phase 1: Harvard & Allston Pipeline", startIdx: 5, endIdx: 10 },
+        { name: "Phase 2: Fenway Art Cluster", startIdx: 11, endIdx: 14 },
+        { name: "Phase 3: Back Bay & Seaport Walk", startIdx: 15, endIdx: 17 },
+        { name: "Phase 4: Waterfront & Financial", startIdx: 18, endIdx: 20 },
+        { name: "Phase 5: MIT & Kendall Square", startIdx: 21, endIdx: 25 }
+      ]
+    };
 
     // State Variables
+    let selectedDay = 1;
     let checkedStops = new Set();
     let trackingActive = false;
     let campaignStartTime = null;
@@ -1018,6 +1114,7 @@
     let isHapticsEnabled = true;
 
     // Local Storage Keys
+    const LS_SELECTED_DAY = 'artzoom_campaign_selected_day';
     const LS_CHECKED_STOPS = 'artzoom_campaign_checked';
     const LS_START_TIME = 'artzoom_campaign_start_time';
     const LS_TRACKING_ACTIVE = 'artzoom_campaign_tracking_active';
@@ -1071,6 +1168,21 @@
       }
     }
 
+    function getActiveStops() {
+      const dayStops = campaignStops.filter(s => s.day === selectedDay);
+      const startNode = campaignStops[0];
+      const endNode = {
+        ...startNode,
+        id: 99,
+        name: "Return Home: 11 Waterhouse St",
+        travel: selectedDay === 1 ? "8-minute walk from Tufts Upper Campus" : "10-minute walk from Davis Station",
+        placement: "Final Destination",
+        details: "Head back to home base to complete the day's campaign.",
+        transitMinutes: selectedDay === 1 ? 8 : 10
+      };
+      return [startNode, ...dayStops, endNode];
+    }
+
     // Map Setup
     function initMap() {
       const isDark = document.documentElement.classList.contains('dark');
@@ -1094,13 +1206,32 @@
       // Plot route lines
       drawRoutePolyline();
 
-      // Plot Markers
-      campaignStops.forEach(stop => {
-        const markerClass = getMarkerClass(stop);
-        const iconHtml = `<div class="custom-marker ${markerClass}" id="marker-icon-${stop.id}">${stop.id === 0 ? 'H' : stop.id}</div>`;
+      // Clear existing markers if any
+      for (let key in markers) {
+        map.removeLayer(markers[key]);
+      }
+      markers = {};
+
+      // Plot Markers (don't draw duplicate home marker for 99)
+      const activeStops = getActiveStops().filter(s => s.id !== 99);
+      activeStops.forEach(stop => {
+        const isTransit = stop.type === 'transit';
+        let markerHtml = '';
+        if (stop.id === 0) {
+          markerHtml = `<div class="custom-marker custom-marker-start bg-brand-indigo border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white font-bold" id="marker-icon-${stop.id}">H</div>`;
+        } else if (isTransit) {
+          let iconName = 'train';
+          if (stop.name.toLowerCase().includes('bus') || stop.name.includes('66')) {
+            iconName = 'bus';
+          }
+          markerHtml = `<div class="custom-marker bg-blue-600 border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white" id="marker-icon-${stop.id}"><i data-lucide="${iconName}" class="w-3.5 h-3.5"></i></div>`;
+        } else {
+          const markerClass = getMarkerClass(stop);
+          markerHtml = `<div class="custom-marker ${markerClass}" id="marker-icon-${stop.id}">${stop.displayId}</div>`;
+        }
         
         const myIcon = L.divIcon({
-          html: iconHtml,
+          html: markerHtml,
           className: '',
           iconSize: [28, 28],
           iconAnchor: [14, 14]
@@ -1120,7 +1251,7 @@
                 <i data-lucide="navigation-2" class="w-2.5 h-2.5"></i>
                 <span>Navigate</span>
               </a>
-              ${stop.id > 0 ? `
+              ${stop.id > 0 && stop.type === 'poster' ? `
                 <button onclick="window.toggleStopChecked(${stop.id})" class="border border-stone-200 dark:border-stone-800 text-[10px] px-2 py-1 rounded font-semibold text-brand-black dark:text-brand-white hover:bg-stone-100 dark:hover:bg-stone-900">
                   Toggle Done
                 </button>
@@ -1139,32 +1270,55 @@
       });
 
       fitRouteBounds();
+      lucide.createIcons();
     }
 
     function getMarkerClass(stop) {
-      if (stop.id === 0) return 'custom-marker-start';
+      if (stop.id === 0) {
+        if (activeStopId === 99) return 'custom-marker-active';
+        return 'custom-marker-start';
+      }
       if (stop.id === activeStopId) return 'custom-marker-active';
       if (checkedStops.has(stop.id)) return 'custom-marker-completed';
       return 'custom-marker-pending';
     }
 
     function updateMapMarkerStyles() {
-      campaignStops.forEach(stop => {
-        const markerClass = getMarkerClass(stop);
+      const activeStops = getActiveStops().filter(s => s.id !== 99);
+      activeStops.forEach(stop => {
         const iconDiv = document.getElementById(`marker-icon-${stop.id}`);
         if (iconDiv) {
-          iconDiv.className = `custom-marker ${markerClass}`;
+          const isTransit = stop.type === 'transit';
+          if (stop.id === 0) {
+            if (activeStopId === 99) {
+              iconDiv.className = `custom-marker custom-marker-active bg-brand-indigo border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white font-bold shadow-[0_0_0_4px_rgba(108,147,118,0.4)] scale-115`;
+            } else {
+              iconDiv.className = `custom-marker custom-marker-start bg-brand-indigo border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white font-bold`;
+            }
+          } else if (isTransit) {
+            if (stop.id === activeStopId) {
+              iconDiv.className = `custom-marker bg-blue-600 border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white shadow-[0_0_0_4px_rgba(59,130,246,0.4)] scale-115`;
+            } else {
+              iconDiv.className = `custom-marker bg-blue-600 border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white`;
+            }
+          } else {
+            const markerClass = getMarkerClass(stop);
+            iconDiv.className = `custom-marker ${markerClass}`;
+          }
         }
       });
     }
 
     function drawRoutePolyline() {
-      // Connect chronologically
-      const coords = campaignStops.map(s => [s.lat, s.lng]);
-      // Add home connection back from Stop 20
-      coords.push([campaignStops[0].lat, campaignStops[0].lng]);
+      const activeStops = getActiveStops();
+      const coords = activeStops.map(s => [s.lat, s.lng]);
 
       const polylineColor = document.documentElement.classList.contains('dark') ? '#4C6753' : '#6C9376';
+      
+      if (routeLine) {
+        map.removeLayer(routeLine);
+      }
+      
       routeLine = L.polyline(coords, {
         color: polylineColor,
         weight: 3.5,
@@ -1174,7 +1328,10 @@
     }
 
     function fitRouteBounds() {
-      const bounds = L.latLngBounds(campaignStops.map(s => [s.lat, s.lng]));
+      const dayStops = campaignStops.filter(s => s.day === selectedDay);
+      if (dayStops.length === 0) return;
+      const bounds = L.latLngBounds(dayStops.map(s => [s.lat, s.lng]));
+      bounds.extend([campaignStops[0].lat, campaignStops[0].lng]); // include home base
       map.fitBounds(bounds, { padding: [30, 30] });
     }
 
@@ -1183,18 +1340,38 @@
       const container = document.getElementById('phases-accordion-container');
       container.innerHTML = '';
 
-      phases.forEach((phase, phaseIdx) => {
+      const dayPhases = phases[selectedDay];
+      if (!dayPhases) return;
+
+      dayPhases.forEach((phase, phaseIdx) => {
         const phaseDiv = document.createElement('div');
         phaseDiv.className = 'border border-stone-200 dark:border-stone-800 rounded-xl overflow-hidden bg-brand-white dark:bg-brand-black';
         
-        // Count completions in phase
+        // Count completions in phase (posters only for placed fraction)
         let phaseTotal = 0;
         let phaseCompleted = 0;
         for (let i = phase.startIdx; i <= phase.endIdx; i++) {
-          phaseTotal++;
-          if (checkedStops.has(i)) phaseCompleted++;
+          const stop = campaignStops.find(s => s.id === i);
+          if (stop && stop.type === 'poster') {
+            phaseTotal++;
+            if (checkedStops.has(i)) phaseCompleted++;
+          }
         }
-        const allDone = phaseTotal === phaseCompleted;
+
+        // Check if ALL stops in phase (including transit) are checked
+        let allDone = true;
+        for (let i = phase.startIdx; i <= phase.endIdx; i++) {
+          if (!checkedStops.has(i)) {
+            allDone = false;
+            break;
+          }
+        }
+        
+        // Handle return home stop for last phase
+        const isLastPhase = phaseIdx === dayPhases.length - 1;
+        if (isLastPhase && allDone && !checkedStops.has(99)) {
+          allDone = false;
+        }
 
         // Phase Header
         const header = document.createElement('div');
@@ -1228,7 +1405,7 @@
         listContainer.className = 'divide-y divide-stone-100 dark:divide-stone-900 transition-all duration-200 overflow-hidden';
         listContainer.id = `phase-list-${phaseIdx}`;
         
-        // Default opened phases: open the one that's not completed
+        // Default opened phases
         const isCollapsed = allDone;
         if (isCollapsed) {
           listContainer.style.setProperty('display', 'none', 'important');
@@ -1252,18 +1429,28 @@
         // Add Stops to list
         for (let i = phase.startIdx; i <= phase.endIdx; i++) {
           const stop = campaignStops.find(s => s.id === i);
+          if (!stop) continue;
+          
           const stopDone = checkedStops.has(stop.id);
           const stopActive = stop.id === activeStopId;
+          const isTransit = stop.type === 'transit';
+          
+          const activeBgClass = isTransit 
+            ? 'bg-blue-500/5 border-l-4 border-blue-500' 
+            : 'bg-brand-celadon/5 border-l-4 border-brand-celadon';
+          const hoverBgClass = 'hover:bg-stone-50 dark:hover:bg-stone-950 border-l-4 border-transparent';
+          const borderClass = stopActive ? activeBgClass : (stopDone ? 'opacity-50 hover:opacity-80' : hoverBgClass);
+
+          const checkboxColorClass = isTransit 
+            ? 'text-blue-600 focus:ring-blue-600 checked:bg-blue-600' 
+            : 'text-brand-celadon focus:ring-brand-celadon checked:bg-brand-celadon';
+            
+          const labelText = isTransit ? 'transit' : `+${stop.transitMinutes}m travel`;
+          const iconName = isTransit ? (stop.name.toLowerCase().includes('bus') ? 'bus' : 'train') : 'pin';
 
           const stopRow = document.createElement('div');
           stopRow.id = `stop-row-${stop.id}`;
-          stopRow.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative ${
-            stopActive 
-              ? 'bg-brand-celadon/5 border-l-4 border-brand-celadon' 
-              : stopDone 
-                ? 'opacity-50 hover:opacity-80' 
-                : 'hover:bg-stone-50 dark:hover:bg-stone-950 border-l-4 border-transparent'
-          }`;
+          stopRow.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative ${borderClass}`;
 
           stopRow.innerHTML = `
             <!-- Custom Checkbox (Tap Target 44px min for mobile accessibility) -->
@@ -1271,7 +1458,7 @@
               <input type="checkbox" 
                      id="chk-stop-${stop.id}" 
                      ${stopDone ? 'checked' : ''} 
-                     class="custom-checkbox w-5 h-5 rounded border-stone-300 dark:border-stone-700 text-brand-celadon focus:ring-brand-celadon bg-brand-white dark:bg-stone-900 appearance-none border cursor-pointer checked:bg-brand-celadon relative checked:after:content-[''] checked:after:absolute checked:after:w-1.5 checked:after:height-3 checked:after:border-white checked:after:border-r-2 checked:after:border-b-2 checked:after:transform checked:after:rotate-45 checked:after:top-0.5 checked:after:left-[6px]"
+                     class="custom-checkbox w-5 h-5 rounded border-stone-300 dark:border-stone-700 ${checkboxColorClass} bg-brand-white dark:bg-stone-900 appearance-none border cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:w-1.5 checked:after:height-3 checked:after:border-white checked:after:border-r-2 checked:after:border-b-2 checked:after:transform checked:after:rotate-45 checked:after:top-0.5 checked:after:left-[6px]"
                      onclick="event.stopPropagation(); window.toggleStopChecked(${stop.id})">
             </div>
             
@@ -1281,11 +1468,11 @@
                   ${stop.name}
                 </h4>
                 <span class="text-[10px] text-stone-500 font-medium whitespace-nowrap ml-2">
-                  +${stop.transitMinutes}m travel
+                  ${labelText}
                 </span>
               </div>
               <div class="text-xs text-stone-500 dark:text-stone-400 mt-1 font-medium flex items-start space-x-1">
-                <i data-lucide="pin" class="w-3.5 h-3.5 flex-shrink-0 text-brand-celadon mt-0.5"></i>
+                <i data-lucide="${iconName}" class="w-3.5 h-3.5 flex-shrink-0 ${isTransit ? 'text-blue-500' : 'text-brand-celadon'} mt-0.5"></i>
                 <span class="truncate">${stop.placement}</span>
               </div>
               
@@ -1311,6 +1498,69 @@
           listContainer.appendChild(stopRow);
         }
 
+        // Add special Return Home stop for the very last phase
+        if (isLastPhase) {
+          const returnHomeStop = {
+            id: 99,
+            name: "Return Home: 11 Waterhouse St",
+            type: "home",
+            travel: selectedDay === 1 ? "8-minute walk from Tufts Upper Campus" : "10-minute walk from Davis Station",
+            placement: "Final Destination",
+            details: "Head back to home base to complete the day's campaign.",
+            lat: campaignStops[0].lat,
+            lng: campaignStops[0].lng
+          };
+          
+          const stopDone = checkedStops.has(99);
+          const stopActive = activeStopId === 99;
+          
+          const stopRow = document.createElement('div');
+          stopRow.id = `stop-row-99`;
+          const activeBgClass = 'bg-blue-500/5 border-l-4 border-blue-500';
+          const hoverBgClass = 'hover:bg-stone-50 dark:hover:bg-stone-950 border-l-4 border-transparent';
+          const borderClass = stopActive ? activeBgClass : (stopDone ? 'opacity-50 hover:opacity-80' : hoverBgClass);
+          
+          stopRow.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative ${borderClass}`;
+          
+          stopRow.innerHTML = `
+            <div class="flex items-center justify-center h-6 w-6 mt-0.5">
+              <input type="checkbox" 
+                     id="chk-stop-99" 
+                     ${stopDone ? 'checked' : ''} 
+                     class="custom-checkbox w-5 h-5 rounded border-stone-300 dark:border-stone-700 text-blue-600 focus:ring-blue-600 bg-brand-white dark:bg-stone-900 appearance-none border cursor-pointer relative checked:after:content-[''] checked:after:absolute checked:after:w-1.5 checked:after:height-3 checked:after:border-white checked:after:border-r-2 checked:after:border-b-2 checked:after:transform checked:after:rotate-45 checked:after:top-0.5 checked:after:left-[6px]"
+                     onclick="event.stopPropagation(); window.toggleStopChecked(99)">
+            </div>
+            
+            <div class="flex-1 min-w-0" onclick="window.selectStop(99, true)">
+              <div class="flex items-baseline justify-between">
+                <h4 class="font-bold text-sm truncate font-outfit ${stopDone ? 'text-stone-400 line-through' : ''}">
+                  ${returnHomeStop.name}
+                </h4>
+                <span class="text-[10px] text-stone-500 font-medium whitespace-nowrap ml-2">
+                  ${selectedDay === 1 ? '+8m walk' : '+10m walk'}
+                </span>
+              </div>
+              <div class="text-xs text-stone-500 dark:text-stone-400 mt-1 font-medium flex items-start space-x-1">
+                <i data-lucide="home" class="w-3.5 h-3.5 flex-shrink-0 text-blue-500 mt-0.5"></i>
+                <span class="truncate">${returnHomeStop.placement}</span>
+              </div>
+              
+              <div id="expanded-details-99" style="${stopActive ? '' : 'display: none !important;'}" class="text-xs mt-3 space-y-2">
+                <p class="text-stone-600 dark:text-stone-300 italic border-l-2 border-stone-200 dark:border-stone-800 pl-2">
+                  ${returnHomeStop.details}
+                </p>
+                <div class="flex items-center space-x-2 pt-1.5">
+                  <a href="https://www.google.com/maps/dir/?api=1&destination=${returnHomeStop.lat},${returnHomeStop.lng}&travelmode=walking" target="_blank" class="bg-brand-indigo/10 text-brand-indigo dark:bg-brand-indigoLight/10 dark:text-brand-indigoLight px-2.5 py-1 rounded-md text-[10px] font-bold inline-flex items-center space-x-1 hover:bg-brand-indigo/20">
+                    <i data-lucide="navigation-2" class="w-3 h-3"></i>
+                    <span>Directions</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+          listContainer.appendChild(stopRow);
+        }
+
         phaseDiv.appendChild(header);
         phaseDiv.appendChild(listContainer);
         container.appendChild(phaseDiv);
@@ -1330,10 +1580,7 @@
       }
       
       saveState();
-      
-      // Auto-set the next target as active
       findAndSetActiveStop();
-      
       renderChecklist();
       updateMapMarkerStyles();
       updateDashboard();
@@ -1341,17 +1588,21 @@
 
     // Auto calculate the next target
     function findAndSetActiveStop() {
-      // Find the first stop (1-20) that is not checked
-      let nextActive = 1;
-      for (let i = 1; i <= 20; i++) {
-        if (!checkedStops.has(i)) {
-          nextActive = i;
+      const dayStops = campaignStops.filter(s => s.day === selectedDay);
+      let nextActive = null;
+      for (let i = 0; i < dayStops.length; i++) {
+        if (!checkedStops.has(dayStops[i].id)) {
+          nextActive = dayStops[i].id;
           break;
         }
       }
-      // If all are done, active target is back home (id 0) or just final approach
-      if (checkedStops.size === 20) {
-        nextActive = 0; // finished
+      
+      if (nextActive === null) {
+        if (!checkedStops.has(99)) {
+          nextActive = 99;
+        } else {
+          nextActive = 0; // completely finished day
+        }
       }
       
       activeStopId = nextActive;
@@ -1363,13 +1614,20 @@
       activeStopId = id;
       
       // Update sidebar highlight
-      campaignStops.forEach(stop => {
+      const dayStops = campaignStops.filter(s => s.day === selectedDay);
+      const allStopsForSelect = [...dayStops, { id: 99 }];
+      
+      allStopsForSelect.forEach(stop => {
         const row = document.getElementById(`stop-row-${stop.id}`);
         const detailsDiv = document.getElementById(`expanded-details-${stop.id}`);
         
         if (row && detailsDiv) {
           if (stop.id === id) {
-            row.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative bg-brand-celadon/5 border-l-4 border-brand-celadon`;
+            const isTransit = stop.id === 99 || campaignStops.find(s => s.id === stop.id).type === 'transit';
+            const activeBgClass = isTransit 
+              ? 'bg-blue-500/5 border-l-4 border-blue-500' 
+              : 'bg-brand-celadon/5 border-l-4 border-brand-celadon';
+            row.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative ${activeBgClass}`;
             detailsDiv.style.display = '';
           } else {
             const done = checkedStops.has(stop.id);
@@ -1385,9 +1643,11 @@
       updateMapMarkerStyles();
 
       // Pan Map
-      if (shouldPan && map && markers[id]) {
-        map.setView(markers[id].getLatLng(), 15, { animate: true });
-        markers[id].openPopup();
+      let markerIdToPan = id;
+      if (id === 99) markerIdToPan = 0;
+      if (shouldPan && map && markers[markerIdToPan]) {
+        map.setView(markers[markerIdToPan].getLatLng(), 15, { animate: true });
+        markers[markerIdToPan].openPopup();
       }
 
       updateActiveTargetPanel();
@@ -1396,7 +1656,19 @@
 
     // Update the visual panels
     function updateActiveTargetPanel() {
-      const activeStop = campaignStops.find(s => s.id === activeStopId) || campaignStops[0];
+      let activeStop = campaignStops.find(s => s.id === activeStopId);
+      if (activeStopId === 99) {
+        activeStop = {
+          name: "Return Home: 11 Waterhouse St",
+          placement: "Final Destination",
+          travel: selectedDay === 1 ? "8-minute walk from Tufts Upper Campus" : "10-minute walk from Davis Station",
+          lat: campaignStops[0].lat,
+          lng: campaignStops[0].lng
+        };
+      }
+      if (!activeStop) {
+        activeStop = campaignStops[0];
+      }
       
       document.getElementById('active-target-name').innerText = activeStop.name;
       document.getElementById('active-target-placement').innerText = activeStop.placement;
@@ -1413,14 +1685,20 @@
         if (checkedStops.has(activeStopId)) {
           doneBtn.innerHTML = `<i data-lucide="undo" class="w-3.5 h-3.5"></i><span>Mark Pending</span>`;
         } else {
-          doneBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i><span>Mark Hung</span>`;
+          doneBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i><span>Mark Complete</span>`;
         }
       }
       lucide.createIcons();
     }
 
     function updateFooterNextStop() {
-      const activeStop = campaignStops.find(s => s.id === activeStopId) || campaignStops[0];
+      let activeStop = campaignStops.find(s => s.id === activeStopId);
+      if (activeStopId === 99) {
+        activeStop = { name: "Return Home" };
+      }
+      if (!activeStop) {
+        activeStop = campaignStops[0];
+      }
       
       const footerName = document.getElementById('footer-next-stop-name');
       footerName.innerText = activeStop.name;
@@ -1428,38 +1706,45 @@
 
     // Update stats, remaining duration
     function updateDashboard() {
-      const placed = checkedStops.size;
+      const dayPosters = campaignStops.filter(s => s.day === selectedDay && s.type === 'poster');
+      const totalPosters = dayPosters.length;
+      let placed = 0;
+      dayPosters.forEach(stop => {
+        if (checkedStops.has(stop.id)) placed++;
+      });
       
       // Update global header counters
       document.getElementById('placed-count-stat').innerText = placed;
-      document.getElementById('placed-fraction').innerText = `${placed} of 20 posters hung`;
+      const totalCountStatEl = document.getElementById('total-count-stat');
+      if (totalCountStatEl) {
+        totalCountStatEl.innerText = totalPosters;
+      }
       
-      const pct = Math.round((placed / 20) * 100);
+      document.getElementById('placed-fraction').innerText = `${placed} of ${totalPosters} posters hung`;
+      
+      const pct = totalPosters > 0 ? Math.round((placed / totalPosters) * 100) : 0;
       document.getElementById('placed-percentage').innerText = `${pct}%`;
       
       const progBar = document.getElementById('campaign-progress-bar');
       progBar.style.width = `${pct}%`;
 
       // Estimate remaining duration
-      // Total transit = 154 mins. Total placement = 40 mins (2 mins per stop).
-      // We subtract the transit time and placement time of checked stops.
-      let remainingTransit = 154;
-      let remainingPlacement = 40;
+      let remainingTransit = 0;
+      let remainingPlacement = 0;
 
-      campaignStops.forEach(stop => {
-        if (stop.id > 0 && checkedStops.has(stop.id)) {
-          remainingTransit -= stop.transitMinutes;
-          remainingPlacement -= 2;
+      const dayStops = campaignStops.filter(s => s.day === selectedDay);
+      dayStops.forEach(stop => {
+        if (!checkedStops.has(stop.id)) {
+          remainingTransit += stop.transitMinutes;
+          if (stop.type === 'poster') {
+            remainingPlacement += 2;
+          }
         }
       });
-      // Home stretch walk from stop 20 home
-      if (checkedStops.has(20)) {
-        remainingTransit -= 3; // subtract final walk home
+      
+      if (!checkedStops.has(99)) {
+        remainingTransit += (selectedDay === 1 ? 8 : 10);
       }
-
-      // Ensure we don't go below 0
-      remainingTransit = Math.max(0, remainingTransit);
-      remainingPlacement = Math.max(0, remainingPlacement);
 
       const totalRemainingMins = remainingTransit + remainingPlacement;
       const hours = Math.floor(totalRemainingMins / 60);
@@ -1468,6 +1753,65 @@
       const timeStr = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
       document.getElementById('remaining-time-stat').innerText = timeStr;
       document.getElementById('remaining-time-val').innerText = timeStr;
+
+      // Update Info Tab stats
+      const infoTotalStops = document.getElementById('stats-total-stops');
+      const infoEstTime = document.getElementById('stats-est-time');
+      const infoTransitWalk = document.getElementById('stats-transit-walk');
+      const infoPosterHanging = document.getElementById('stats-poster-hanging');
+      
+      if (selectedDay === 1) {
+        if (infoTotalStops) infoTotalStops.innerText = "4 Locations";
+        if (infoEstTime) infoEstTime.innerText = "42 mins";
+        if (infoTransitWalk) infoTransitWalk.innerText = "~34 mins";
+        if (infoPosterHanging) infoPosterHanging.innerText = "~8 mins";
+      } else {
+        if (infoTotalStops) infoTotalStops.innerText = "16 Locations";
+        if (infoEstTime) infoEstTime.innerText = "3h 34m";
+        if (infoTransitWalk) infoTransitWalk.innerText = "~182 mins";
+        if (infoPosterHanging) infoPosterHanging.innerText = "~32 mins";
+      }
+
+      // Update Info Tab Transit Network list
+      const transitContainer = document.getElementById('stats-transit-container');
+      if (transitContainer) {
+        if (selectedDay === 1) {
+          transitContainer.innerHTML = `
+            <div class="flex items-center justify-between p-2 rounded-lg bg-stone-100 dark:bg-stone-900/60 text-stone-700 dark:text-stone-400 font-semibold">
+              <div class="flex items-center space-x-2">
+                <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                <span>Walking Only</span>
+              </div>
+              <span class="text-[10px] bg-stone-200 dark:bg-stone-800 px-2 py-0.5 rounded-full">Somerville Loop</span>
+            </div>
+          `;
+        } else {
+          transitContainer.innerHTML = `
+            <div class="flex items-center justify-between p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-700 dark:text-red-400 font-semibold">
+              <div class="flex items-center space-x-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-red-600 border border-white"></span>
+                <span>MBTA Red Line</span>
+              </div>
+              <span class="text-[10px] bg-red-600 text-white px-2 py-0.5 rounded-full">Davis & Kendall</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 font-semibold mt-2">
+              <div class="flex items-center space-x-2">
+                <i data-lucide="bus" class="w-3.5 h-3.5 text-amber-500"></i>
+                <span>MBTA 66 Bus</span>
+              </div>
+              <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full">Harvard to Union Sq</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 font-semibold mt-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-3.5 h-3.5 rounded-full bg-green-600 border border-white"></span>
+                <span>Green Line B & E Branches</span>
+              </div>
+              <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-full">Allston & Huntington</span>
+            </div>
+          `;
+        }
+        lucide.createIcons();
+      }
     }
 
     // Timer Logic
@@ -1532,6 +1876,24 @@
     }
 
     function loadState() {
+      // Selected Day
+      const savedDay = localStorage.getItem(LS_SELECTED_DAY);
+      selectedDay = savedDay ? parseInt(savedDay) : 1;
+      
+      // Update Day buttons immediately
+      const day1Btn = document.getElementById('day-1-btn');
+      const day2Btn = document.getElementById('day-2-btn');
+      const activeClass = "flex-1 py-2 text-center rounded-lg bg-brand-celadon text-white font-bold transition-all cursor-pointer";
+      const inactiveClass = "flex-1 py-2 text-center rounded-lg text-stone-500 dark:text-stone-400 hover:text-brand-black dark:hover:text-brand-white transition-all cursor-pointer";
+      
+      if (selectedDay === 1) {
+        if (day1Btn) day1Btn.className = activeClass;
+        if (day2Btn) day2Btn.className = inactiveClass;
+      } else {
+        if (day1Btn) day1Btn.className = inactiveClass;
+        if (day2Btn) day2Btn.className = activeClass;
+      }
+
       // Checked Stops
       try {
         const savedChecked = localStorage.getItem(LS_CHECKED_STOPS);
@@ -1563,6 +1925,35 @@
 
       findAndSetActiveStop();
     }
+
+    window.selectDay = function(day) {
+      selectedDay = day;
+      localStorage.setItem(LS_SELECTED_DAY, String(selectedDay));
+      
+      const day1Btn = document.getElementById('day-1-btn');
+      const day2Btn = document.getElementById('day-2-btn');
+      
+      const activeClass = "flex-1 py-2 text-center rounded-lg bg-brand-celadon text-white font-bold transition-all cursor-pointer";
+      const inactiveClass = "flex-1 py-2 text-center rounded-lg text-stone-500 dark:text-stone-400 hover:text-brand-black dark:hover:text-brand-white transition-all cursor-pointer";
+      
+      if (day === 1) {
+        if (day1Btn) day1Btn.className = activeClass;
+        if (day2Btn) day2Btn.className = inactiveClass;
+      } else {
+        if (day1Btn) day1Btn.className = inactiveClass;
+        if (day2Btn) day2Btn.className = activeClass;
+      }
+      
+      if (map) {
+        map.remove();
+        initMap();
+      }
+      
+      findAndSetActiveStop();
+      renderChecklist();
+      updateDashboard();
+      triggerFeedback();
+    };
 
     function updateHapticBtnStyle() {
       const btn = document.getElementById('haptic-toggle-btn');
@@ -1659,7 +2050,6 @@
         const activeRow = document.getElementById(`stop-row-${activeStopId}`);
         const scrollable = document.getElementById('scrollable-pane');
         if (activeRow && scrollable) {
-          // Switch tab to list if it isn't active
           document.getElementById('tab-list').click();
           setTimeout(() => {
             activeRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1743,7 +2133,6 @@
       const btn = document.getElementById('gps-toggle-btn');
       
       if (watchId === null) {
-        // Start watching location
         if (!navigator.geolocation) {
           alert("Geolocation is not supported by your browser.");
           return;
@@ -1768,7 +2157,6 @@
               userLocationMarker = L.marker([lat, lng], { icon: gpsIcon }).addTo(map);
             }
             
-            // Auto pan to user location on first fix
             map.setView([lat, lng], 15);
           },
           (error) => {
