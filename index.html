@@ -174,23 +174,36 @@
       background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
     }
 
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @media (min-width: 640px) {
+      body {
+        overflow: hidden;
+      }
+    }
+
     /* CSS adjustments for mobile split viewport */
     @media (max-width: 640px) {
       .main-grid {
-        grid-template-rows: 38vh calc(62vh - 60px);
+        display: block !important;
+        height: auto !important;
+      }
+      #map {
+        height: 38vh !important;
       }
     }
   </style>
 </head>
-<body class="h-full bg-brand-white text-brand-black dark:bg-brand-black dark:text-brand-white transition-colors duration-200">
+<body class="min-h-full sm:h-full bg-brand-white text-brand-black dark:bg-brand-black dark:text-brand-white transition-colors duration-200">
 
-  <div class="h-full flex flex-col">
+  <div class="min-h-screen sm:h-full flex flex-col">
     <!-- Header -->
     <header class="border-b border-stone-200 dark:border-stone-800 bg-brand-white dark:bg-brand-black px-4 py-3 flex items-center justify-between z-10 select-none">
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-1 sm:space-x-2">
         <span class="text-xl font-bold font-outfit tracking-tight">ArtZoom<span class="text-brand-celadon">.</span></span>
-        <span class="text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-mono bg-stone-100 dark:bg-stone-900 px-2 py-0.5 rounded">Campaign</span>
-        <button id="toggle-notes-view-btn" class="text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-2 sm:ml-3 cursor-pointer">
+        <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-mono bg-stone-100 dark:bg-stone-900 px-2 py-0.5 rounded">Campaign</span>
+        <button id="toggle-notes-view-btn" class="text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-1 sm:ml-3 cursor-pointer">
           <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
           <span id="notes-btn-text">Read Notes</span>
         </button>
@@ -208,8 +221,11 @@
         </div>
       </div>
 
-      <!-- Controls: GPS, Sound, Theme -->
-      <div class="flex items-center space-x-3">
+      <!-- Controls: Reset, GPS, Sound, Theme -->
+      <div class="flex items-center space-x-1.5 sm:space-x-3">
+        <button id="header-reset-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-red-500/10 hover:text-red-500 transition-colors text-stone-600 dark:text-stone-400" title="Reset Campaign">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+        </button>
         <button id="gps-toggle-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400" title="Locate Me">
           <i data-lucide="navigation" class="w-4 h-4"></i>
         </button>
@@ -224,7 +240,7 @@
     </header>
 
     <!-- Main Grid: Top Map / Bottom List on mobile, Left Map / Right List on Desktop -->
-    <div id="main-app-layout" class="flex-1 grid grid-cols-1 sm:grid-cols-12 main-grid overflow-hidden">
+    <div id="main-app-layout" class="flex-1 grid grid-cols-1 sm:grid-cols-12 main-grid overflow-visible sm:overflow-hidden">
       
       <!-- Map Section (sm:col-span-5 or 6) -->
       <div class="relative sm:col-span-5 md:col-span-6 border-r border-stone-200 dark:border-stone-800 h-full w-full">
@@ -242,7 +258,7 @@
       </div>
 
       <!-- Content/Checklist Panel (sm:col-span-7 or 6) -->
-      <div class="sm:col-span-7 md:col-span-6 flex flex-col h-full overflow-hidden bg-stone-50 dark:bg-[#0E0E0E]">
+      <div class="sm:col-span-7 md:col-span-6 flex flex-col h-auto sm:h-full overflow-visible sm:overflow-hidden bg-stone-50 dark:bg-[#0E0E0E]">
         
         <!-- Mobile Navigation Tabs (List, Poster, Stats) -->
         <div class="flex border-b border-stone-200 dark:border-stone-800 bg-brand-white dark:bg-brand-black select-none text-sm font-medium">
@@ -258,7 +274,7 @@
         </div>
 
         <!-- Tab Content Panel -->
-        <div class="flex-1 overflow-y-auto p-4 space-y-4" id="scrollable-pane">
+        <div class="flex-1 overflow-visible sm:overflow-y-auto p-4 space-y-4" id="scrollable-pane">
           
           <!-- TAB 1: Route & Checklist -->
           <div id="content-list" class="space-y-4">
@@ -469,7 +485,7 @@
         </div>
 
         <!-- Sticky Floating Next Stop Button (Visible on mobile/when running) -->
-        <div class="p-3 bg-brand-white dark:bg-brand-black border-t border-stone-200 dark:border-stone-800 z-10 flex items-center justify-between select-none">
+        <div class="sticky bottom-0 p-3 bg-brand-white dark:bg-brand-black border-t border-stone-200 dark:border-stone-850 z-20 flex items-center justify-between select-none">
           <div class="flex flex-col">
             <span class="text-[10px] uppercase font-bold text-stone-400">Next Target:</span>
             <span id="footer-next-stop-name" class="text-xs font-semibold truncate max-w-[150px] sm:max-w-xs">Stop 1: Teele Sq</span>
@@ -485,7 +501,7 @@
     </div>
 
     <!-- Full-page distraction-free Route Notes -->
-    <div id="full-notes-layout" class="hidden flex-1 overflow-y-auto bg-brand-white dark:bg-brand-black px-6 py-8 md:px-12 md:py-10 w-full select-text">
+    <div id="full-notes-layout" class="hidden flex-1 overflow-visible sm:overflow-y-auto bg-brand-white dark:bg-brand-black px-6 py-8 md:px-12 md:py-10 w-full select-text">
       <div class="max-w-3xl mx-auto space-y-8 pb-16">
         
         <!-- Header -->
@@ -1549,6 +1565,7 @@
 
       // Reset Button Click
       document.getElementById('reset-campaign-btn').addEventListener('click', resetCampaign);
+      document.getElementById('header-reset-btn').addEventListener('click', resetCampaign);
 
       // Footer focus next click
       document.getElementById('footer-focus-next-btn').addEventListener('click', () => {
