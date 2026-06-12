@@ -209,7 +209,8 @@
         <span class="text-xl font-bold font-outfit tracking-tight">ArtZoom<span class="text-brand-celadon">.</span></span>
         <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-mono bg-stone-100 dark:bg-stone-900 px-2 py-0.5 rounded">Campaign</span>
         <button id="toggle-notes-view-btn" class="text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-1 sm:ml-3 cursor-pointer">
-          <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+          <i data-lucide="book-open" id="notes-icon-book" class="w-3.5 h-3.5"></i>
+          <i data-lucide="map" id="notes-icon-map" class="w-3.5 h-3.5 hidden"></i>
           <span id="notes-btn-text">Read Notes</span>
         </button>
       </div>
@@ -228,13 +229,13 @@
 
       <!-- Controls: Reset, GPS, Sound, Theme -->
       <div class="flex items-center space-x-1.5 sm:space-x-3">
-        <button id="header-reset-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-red-500/10 hover:text-red-500 transition-colors text-stone-600 dark:text-stone-400" title="Reset Campaign">
+        <button id="header-reset-btn" class="hidden sm:block p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-red-500/10 hover:text-red-500 transition-colors text-stone-600 dark:text-stone-400" title="Reset Campaign">
           <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
         </button>
         <button id="gps-toggle-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400" title="Locate Me">
           <i data-lucide="navigation" class="w-4 h-4"></i>
         </button>
-        <button id="haptic-toggle-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400" title="Toggle Haptics/Vibe">
+        <button id="haptic-toggle-btn" class="hidden sm:block p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400" title="Toggle Haptics/Vibe">
           <i data-lucide="smartphone" class="w-4 h-4"></i>
         </button>
         <button id="theme-toggle-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400">
@@ -483,6 +484,31 @@
                 <li><strong>Back Bay & Copley</strong>: General tourists, shoppers, and public library visitors.</li>
                 <li><strong>Tufts University</strong>: Captures Medford/Somerville college campus student traffic.</li>
               </ul>
+            </div>
+
+            <!-- Settings (Mobile Only) -->
+            <div class="sm:hidden bg-brand-white dark:bg-brand-black rounded-xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm space-y-3.5">
+              <h3 class="text-sm font-bold font-outfit uppercase tracking-wider text-brand-celadon">App Settings</h3>
+              <div class="space-y-3 text-xs">
+                <div class="flex items-center justify-between">
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-brand-black dark:text-brand-white">Haptic/Sound Vibe</span>
+                    <span class="text-stone-500 dark:text-stone-400 text-[10px]">Short vibration on button taps</span>
+                  </div>
+                  <button id="mobile-haptic-toggle-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 transition-colors text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900" title="Toggle Haptics/Vibe">
+                    <i data-lucide="smartphone" class="w-4 h-4"></i>
+                  </button>
+                </div>
+                <div class="flex items-center justify-between border-t border-stone-100 dark:border-stone-900 pt-3">
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-red-500">Reset Campaign</span>
+                    <span class="text-stone-500 dark:text-stone-400 text-[10px]">Clear all checked stops and elapsed timers</span>
+                  </div>
+                  <button id="mobile-reset-btn" class="p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-red-500/10 hover:text-red-500 transition-colors text-stone-600 dark:text-stone-400" title="Reset Campaign">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -1495,10 +1521,17 @@
 
     function updateHapticBtnStyle() {
       const btn = document.getElementById('haptic-toggle-btn');
+      const mobileBtn = document.getElementById('mobile-haptic-toggle-btn');
+      
+      const activeClass = "p-2 rounded-lg border border-brand-celadon/30 bg-brand-celadon/10 hover:bg-brand-celadon/20 text-brand-celadon transition-colors";
+      const inactiveClass = "p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400";
+      
       if (isHapticsEnabled) {
-        btn.className = "p-2 rounded-lg border border-brand-celadon/30 bg-brand-celadon/10 hover:bg-brand-celadon/20 text-brand-celadon transition-colors";
+        if (btn) btn.className = activeClass;
+        if (mobileBtn) mobileBtn.className = activeClass;
       } else {
-        btn.className = "p-2 rounded-lg border border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors text-stone-600 dark:text-stone-400";
+        if (btn) btn.className = inactiveClass;
+        if (mobileBtn) mobileBtn.className = inactiveClass;
       }
     }
 
@@ -1593,12 +1626,21 @@
       document.getElementById('gps-toggle-btn').addEventListener('click', toggleGPSTracking);
 
       // Haptic toggle
-      document.getElementById('haptic-toggle-btn').addEventListener('click', () => {
+      const toggleHapticsFn = () => {
         isHapticsEnabled = !isHapticsEnabled;
         updateHapticBtnStyle();
         saveState();
         triggerFeedback();
-      });
+      };
+      
+      const hapticBtn = document.getElementById('haptic-toggle-btn');
+      const mobileHapticBtn = document.getElementById('mobile-haptic-toggle-btn');
+      if (hapticBtn) hapticBtn.addEventListener('click', toggleHapticsFn);
+      if (mobileHapticBtn) mobileHapticBtn.addEventListener('click', toggleHapticsFn);
+
+      // Mobile Reset click
+      const mobileResetBtn = document.getElementById('mobile-reset-btn');
+      if (mobileResetBtn) mobileResetBtn.addEventListener('click', resetCampaign);
 
       // Theme toggle
       document.getElementById('theme-toggle-btn').addEventListener('click', () => {
@@ -1620,6 +1662,8 @@
         const notesLayout = document.getElementById('full-notes-layout');
         const btnText = document.getElementById('notes-btn-text');
         const btn = document.getElementById('toggle-notes-view-btn');
+        const bookIcon = document.getElementById('notes-icon-book');
+        const mapIcon = document.getElementById('notes-icon-map');
         
         const showingNotes = notesLayout.classList.contains('hidden');
         
@@ -1627,23 +1671,24 @@
           mainLayout.classList.add('hidden');
           notesLayout.classList.remove('hidden');
           btnText.innerText = 'Back to Map';
-          btn.className = "text-[10px] sm:text-xs font-semibold text-brand-indigo dark:text-brand-indigoLight hover:bg-brand-indigo/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-indigo/20 bg-brand-indigo/5 ml-2 sm:ml-3 cursor-pointer";
-          const iconEl = btn.querySelector('i, svg');
-          if (iconEl) iconEl.setAttribute('data-lucide', 'map');
+          btn.className = "text-[10px] sm:text-xs font-semibold text-brand-indigo dark:text-brand-indigoLight hover:bg-brand-indigo/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-indigo/20 bg-brand-indigo/5 ml-1 sm:ml-3 cursor-pointer";
+          
+          if (bookIcon) bookIcon.classList.add('hidden');
+          if (mapIcon) mapIcon.classList.remove('hidden');
         } else {
           mainLayout.classList.remove('hidden');
           notesLayout.classList.add('hidden');
           btnText.innerText = 'Read Notes';
-          btn.className = "text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-2 sm:ml-3 cursor-pointer";
-          const iconEl = btn.querySelector('i, svg');
-          if (iconEl) iconEl.setAttribute('data-lucide', 'book-open');
+          btn.className = "text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-1 sm:ml-3 cursor-pointer";
+          
+          if (bookIcon) bookIcon.classList.remove('hidden');
+          if (mapIcon) mapIcon.classList.add('hidden');
           if (map) {
             setTimeout(() => {
               map.invalidateSize();
             }, 100);
           }
         }
-        lucide.createIcons();
       });
     }
 
