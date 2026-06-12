@@ -174,13 +174,18 @@
       background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
+    html, body {
+      height: auto;
+      overflow: auto;
     }
     @media (min-width: 640px) {
-      body {
-        overflow: hidden;
+      html, body {
+        height: 100% !important;
+        overflow: hidden !important;
       }
+    }
+    body {
+      font-family: 'Inter', sans-serif;
     }
 
     /* CSS adjustments for mobile split viewport */
@@ -1623,13 +1628,15 @@
           notesLayout.classList.remove('hidden');
           btnText.innerText = 'Back to Map';
           btn.className = "text-[10px] sm:text-xs font-semibold text-brand-indigo dark:text-brand-indigoLight hover:bg-brand-indigo/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-indigo/20 bg-brand-indigo/5 ml-2 sm:ml-3 cursor-pointer";
-          btn.querySelector('i').setAttribute('data-lucide', 'map');
+          const iconEl = btn.querySelector('i, svg');
+          if (iconEl) iconEl.setAttribute('data-lucide', 'map');
         } else {
           mainLayout.classList.remove('hidden');
           notesLayout.classList.add('hidden');
           btnText.innerText = 'Read Notes';
           btn.className = "text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-2 sm:ml-3 cursor-pointer";
-          btn.querySelector('i').setAttribute('data-lucide', 'book-open');
+          const iconEl = btn.querySelector('i, svg');
+          if (iconEl) iconEl.setAttribute('data-lucide', 'book-open');
           if (map) {
             setTimeout(() => {
               map.invalidateSize();
