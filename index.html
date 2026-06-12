@@ -1,9 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
-<head>
+<<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ArtZoom Campaign Dashboard · Poster Route</title>
+  <script>
+    // Global Error Logger for debugging mobile errors
+    window.onerror = function(message, source, lineno, colno, error) {
+      const errorDiv = document.createElement('div');
+      errorDiv.id = 'js-error-banner';
+      errorDiv.style.position = 'fixed';
+      errorDiv.style.top = '0';
+      errorDiv.style.left = '0';
+      errorDiv.style.width = '100%';
+      errorDiv.style.backgroundColor = '#ef4444';
+      errorDiv.style.color = 'white';
+      errorDiv.style.padding = '12px 16px';
+      errorDiv.style.zIndex = '999999';
+      errorDiv.style.fontSize = '12px';
+      errorDiv.style.fontFamily = 'monospace';
+      errorDiv.style.wordBreak = 'break-all';
+      errorDiv.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+      errorDiv.innerHTML = '<strong>JavaScript Error:</strong> ' + message + '<br><span style="opacity:0.8">at ' + source + ':' + lineno + ':' + colno + '</span>';
+      
+      const closeBtn = document.createElement('button');
+      closeBtn.innerText = '✕';
+      closeBtn.style.float = 'right';
+      closeBtn.style.background = 'none';
+      closeBtn.style.border = 'none';
+      closeBtn.style.color = 'white';
+      closeBtn.style.fontWeight = 'bold';
+      closeBtn.style.cursor = 'pointer';
+      closeBtn.onclick = function() { errorDiv.remove(); };
+      errorDiv.prepend(closeBtn);
+      
+      if (document.body) {
+        document.body.appendChild(errorDiv);
+      } else {
+        document.addEventListener('DOMContentLoaded', () => {
+          document.body.appendChild(errorDiv);
+        });
+      }
+      return false;
+    };
+  </script>
   
   <!-- Favicon Map Icon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 C10.5 2 6 6.5 6 12 C6 19.5 16 30 16 30 C16 30 26 19.5 26 12 C26 6.5 21.5 2 16 2 Z' fill='%236C9376' /%3E%3Ccircle cx='16' cy='12' r='4.5' fill='%23122D54' /%3E%3C/svg%3E">
@@ -210,7 +250,7 @@
         <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-mono bg-stone-100 dark:bg-stone-900 px-2 py-0.5 rounded">Campaign</span>
         <button id="toggle-notes-view-btn" class="text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-1 sm:ml-3 cursor-pointer">
           <i data-lucide="book-open" id="notes-icon-book" class="w-3.5 h-3.5"></i>
-          <i data-lucide="map" id="notes-icon-map" class="w-3.5 h-3.5 hidden"></i>
+          <i data-lucide="map" id="notes-icon-map" class="w-3.5 h-3.5" style="display: none;"></i>
           <span id="notes-btn-text">Read Notes</span>
         </button>
       </div>
@@ -367,7 +407,7 @@
           </div>
 
           <!-- TAB 2: Poster Preview -->
-          <div id="content-poster" class="hidden space-y-4">
+          <div id="content-poster" style="display: none !important;" class="space-y-4">
             <div class="bg-brand-white dark:bg-brand-black rounded-xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
               <div class="text-center">
                 <h3 class="text-lg font-bold font-outfit">ArtZoom Promotional Flyer</h3>
@@ -408,7 +448,7 @@
           </div>
 
           <!-- TAB 3: Stats & Info -->
-          <div id="content-stats" class="hidden space-y-4">
+          <div id="content-stats" style="display: none !important;" class="space-y-4">
             
             <!-- Quick Route Summary -->
             <div class="bg-brand-white dark:bg-brand-black rounded-xl p-4 border border-stone-200 dark:border-stone-800 shadow-sm space-y-3">
@@ -532,7 +572,7 @@
     </div>
 
     <!-- Full-page distraction-free Route Notes -->
-    <div id="full-notes-layout" class="hidden flex-1 overflow-visible sm:overflow-y-auto bg-brand-white dark:bg-brand-black px-6 py-8 md:px-12 md:py-10 w-full select-text">
+    <div id="full-notes-layout" style="display: none !important;" class="flex-1 overflow-visible sm:overflow-y-auto bg-brand-white dark:bg-brand-black px-6 py-8 md:px-12 md:py-10 w-full select-text">
       <div class="max-w-3xl mx-auto space-y-8 pb-16">
         
         <!-- Header -->
@@ -1191,20 +1231,20 @@
         // Default opened phases: open the one that's not completed
         const isCollapsed = allDone;
         if (isCollapsed) {
-          listContainer.classList.add('max-h-0', 'hidden');
+          listContainer.style.setProperty('display', 'none', 'important');
           header.querySelector('i').classList.add('-rotate-90');
         }
 
         // Expand/Collapse click
         header.addEventListener('click', () => {
-          const isHidden = listContainer.classList.contains('hidden');
+          const isHidden = listContainer.style.display === 'none';
           const chevron = document.getElementById(`chevron-phase-${phaseIdx}`);
           
           if (isHidden) {
-            listContainer.classList.remove('hidden', 'max-h-0');
+            listContainer.style.display = '';
             chevron.classList.remove('-rotate-90');
           } else {
-            listContainer.classList.add('hidden', 'max-h-0');
+            listContainer.style.setProperty('display', 'none', 'important');
             chevron.classList.add('-rotate-90');
           }
         });
@@ -1250,7 +1290,7 @@
               </div>
               
               <!-- Expanded details when active/selected -->
-              <div id="expanded-details-${stop.id}" class="${stopActive ? 'mt-3 space-y-2' : 'hidden'} text-xs">
+              <div id="expanded-details-${stop.id}" style="${stopActive ? '' : 'display: none !important;'}" class="text-xs mt-3 space-y-2">
                 <p class="text-stone-600 dark:text-stone-300 italic border-l-2 border-stone-200 dark:border-stone-800 pl-2">
                   ${stop.details}
                 </p>
@@ -1330,14 +1370,13 @@
         if (row && detailsDiv) {
           if (stop.id === id) {
             row.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative bg-brand-celadon/5 border-l-4 border-brand-celadon`;
-            detailsDiv.classList.remove('hidden');
-            detailsDiv.classList.add('mt-3', 'space-y-2');
+            detailsDiv.style.display = '';
           } else {
             const done = checkedStops.has(stop.id);
             row.className = `p-4 flex items-start space-x-3 transition-all cursor-pointer relative ${
               done ? 'opacity-50 hover:opacity-80' : 'hover:bg-stone-50 dark:hover:bg-stone-950'
             } border-l-4 border-transparent`;
-            detailsDiv.classList.add('hidden');
+            detailsDiv.style.setProperty('display', 'none', 'important');
           }
         }
       });
@@ -1368,9 +1407,9 @@
 
       const doneBtn = document.getElementById('active-target-mark-done');
       if (activeStopId === 0) {
-        doneBtn.classList.add('hidden');
+        doneBtn.style.setProperty('display', 'none', 'important');
       } else {
-        doneBtn.classList.remove('hidden');
+        doneBtn.style.setProperty('display', 'inline-flex', 'important');
         if (checkedStops.has(activeStopId)) {
           doneBtn.innerHTML = `<i data-lucide="undo" class="w-3.5 h-3.5"></i><span>Mark Pending</span>`;
         } else {
@@ -1494,9 +1533,15 @@
 
     function loadState() {
       // Checked Stops
-      const savedChecked = localStorage.getItem(LS_CHECKED_STOPS);
-      if (savedChecked) {
-        checkedStops = new Set(JSON.parse(savedChecked));
+      try {
+        const savedChecked = localStorage.getItem(LS_CHECKED_STOPS);
+        if (savedChecked) {
+          checkedStops = new Set(JSON.parse(savedChecked));
+        }
+      } catch (e) {
+        console.error("Error loading checked stops:", e);
+        checkedStops = new Set();
+        localStorage.removeItem(LS_CHECKED_STOPS);
       }
 
       // Tracking State
@@ -1575,12 +1620,12 @@
           triggerFeedback();
           // Hide all panes
           tabs.forEach(t => {
-            t.pane.classList.add('hidden');
+            t.pane.style.setProperty('display', 'none', 'important');
             t.btn.className = "flex-1 py-3 text-center border-b-2 border-transparent text-stone-500 dark:text-stone-400 hover:text-brand-black dark:hover:text-brand-white";
           });
 
           // Show active pane
-          tab.pane.classList.remove('hidden');
+          tab.pane.style.setProperty('display', 'block', 'important');
           tab.btn.className = "flex-1 py-3 text-center border-b-2 border-brand-celadon text-brand-celadon font-bold";
         });
       });
@@ -1665,24 +1710,24 @@
         const bookIcon = document.getElementById('notes-icon-book');
         const mapIcon = document.getElementById('notes-icon-map');
         
-        const showingNotes = notesLayout.classList.contains('hidden');
+        const showingNotes = notesLayout.style.display === 'none' || window.getComputedStyle(notesLayout).display === 'none';
         
         if (showingNotes) {
-          mainLayout.classList.add('hidden');
-          notesLayout.classList.remove('hidden');
+          mainLayout.style.setProperty('display', 'none', 'important');
+          notesLayout.style.setProperty('display', 'block', 'important');
           btnText.innerText = 'Back to Map';
           btn.className = "text-[10px] sm:text-xs font-semibold text-brand-indigo dark:text-brand-indigoLight hover:bg-brand-indigo/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-indigo/20 bg-brand-indigo/5 ml-1 sm:ml-3 cursor-pointer";
           
-          if (bookIcon) bookIcon.classList.add('hidden');
-          if (mapIcon) mapIcon.classList.remove('hidden');
+          if (bookIcon) bookIcon.style.display = 'none';
+          if (mapIcon) mapIcon.style.display = 'inline-block';
         } else {
-          mainLayout.classList.remove('hidden');
-          notesLayout.classList.add('hidden');
+          mainLayout.style.display = '';
+          notesLayout.style.setProperty('display', 'none', 'important');
           btnText.innerText = 'Read Notes';
           btn.className = "text-[10px] sm:text-xs font-semibold text-brand-celadon dark:text-brand-celadonLight hover:bg-brand-celadon/10 transition-colors flex items-center space-x-1 py-1 px-2 sm:px-2.5 rounded-lg border border-brand-celadon/20 bg-brand-celadon/5 ml-1 sm:ml-3 cursor-pointer";
           
-          if (bookIcon) bookIcon.classList.remove('hidden');
-          if (mapIcon) mapIcon.classList.add('hidden');
+          if (bookIcon) bookIcon.style.display = 'inline-block';
+          if (mapIcon) mapIcon.style.display = 'none';
           if (map) {
             setTimeout(() => {
               map.invalidateSize();
